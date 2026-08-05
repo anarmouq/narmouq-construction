@@ -36,7 +36,6 @@ export const nav = [
 
 /* ---- 01. HERO ---------------------------------------------------------- */
 export const hero = {
-  eyebrow: 'Licensed general contractor · Amman, Jordan',
   title: 'We build what lasts.',
   text: 'Residential, commercial and industrial projects delivered on time, on budget and to a standard we are happy to put our name on.',
   primaryCta: { label: 'Request a quote', href: '#contact' },

@@ -20,8 +20,6 @@ export default function Hero() {
 
       <div className="container hero__inner">
         <div className="hero__content">
-          <p className="hero__eyebrow">{hero.eyebrow}</p>
-
           <div className="hero__logo">
             <span className="hero__logo-glow" aria-hidden="true" />
             <img src={company.logoFullLight} alt={company.fullName} fetchPriority="high" />
