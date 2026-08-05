@@ -1,0 +1,163 @@
+/* ==========================================================================
+   SECTION 05 — PROJECTS
+   ========================================================================== */
+
+.projects__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 34px;
+}
+
+.projects__filters button {
+  padding: 11px 22px;
+  border: 1px solid var(--line-light);
+  border-radius: 100px;
+  background: var(--white);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.35s var(--ease), color 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+
+.projects__filters button:hover {
+  border-color: var(--ink-900);
+  color: var(--text-dark);
+}
+
+.projects__filters button.is-active {
+  background: var(--ink-900);
+  border-color: var(--ink-900);
+  color: var(--white);
+}
+
+/* ---- Grid ---------------------------------------------------------------- */
+
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 300px;
+  gap: 22px;
+}
+
+.project {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--ink-800);
+  cursor: pointer;
+}
+
+.project--wide {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.project img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+
+.project:hover img { transform: scale(1.07); }
+
+.project__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(11, 17, 25, 0.92) 0%,
+    rgba(11, 17, 25, 0.45) 42%,
+    rgba(11, 17, 25, 0.05) 100%
+  );
+  transition: opacity 0.5s var(--ease);
+}
+
+.project:hover .project__shade { opacity: 0.86; }
+
+.project__info {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 30px;
+  transform: translateY(6px);
+  transition: transform 0.5s var(--ease);
+}
+
+.project:hover .project__info { transform: none; }
+
+.project__cat {
+  display: inline-block;
+  padding: 5px 12px;
+  margin-bottom: 12px;
+  border-radius: 100px;
+  background: var(--amber);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-900);
+}
+
+.project h3 {
+  color: var(--white);
+  font-size: 1.5rem;
+  letter-spacing: 0.03em;
+}
+
+.project--wide h3 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
+
+.project__info p {
+  margin-top: 8px;
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-on-dark-muted);
+}
+
+.project__arrow {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--amber);
+  color: var(--ink-900);
+  opacity: 0;
+  transform: translateY(-8px) rotate(-45deg);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+
+.project__arrow svg { width: 20px; height: 20px; }
+
+.project:hover .project__arrow {
+  opacity: 1;
+  transform: rotate(-45deg);
+}
+
+/* ---- Breakpoints --------------------------------------------------------- */
+
+@media (max-width: 980px) {
+  .projects__grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 260px;
+  }
+  .project--wide { grid-column: span 2; grid-row: span 1; }
+}
+
+@media (max-width: 620px) {
+  .projects__grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 240px;
+  }
+  .project--wide { grid-column: span 1; }
+  .project__info { padding: 22px; }
+  .project__arrow { opacity: 1; transform: rotate(-45deg); }
+}

@@ -1,0 +1,147 @@
+/* ==========================================================================
+   SECTION 02 — ABOUT
+   ========================================================================== */
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* ---- Images ------------------------------------------------------------- */
+
+.about__media {
+  position: relative;
+  padding-bottom: 70px;
+  padding-right: 60px;
+}
+
+.about__photo {
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.about__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+
+.about__media:hover .about__photo img { transform: scale(1.05); }
+
+.about__photo--main { aspect-ratio: 4 / 5; }
+
+.about__photo--sub {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 58%;
+  aspect-ratio: 4 / 3;
+  border: 8px solid var(--white);
+  box-shadow: var(--shadow-lg);
+}
+
+.about__badge {
+  position: absolute;
+  top: 28px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 24px;
+  background: var(--amber);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  color: var(--ink-900);
+  max-width: 150px;
+}
+
+.about__badge strong {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.about__badge span {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* ---- Copy --------------------------------------------------------------- */
+
+.about__text {
+  margin-top: 22px;
+  font-size: 1.05rem;
+}
+
+.about__points {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.about__points li {
+  display: flex;
+  gap: 18px;
+}
+
+.about__check {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: var(--concrete-200);
+  color: var(--amber-dark);
+  transition: background 0.35s var(--ease), color 0.35s var(--ease);
+}
+
+.about__points li:hover .about__check {
+  background: var(--amber);
+  color: var(--ink-900);
+}
+
+.about__check svg { width: 20px; height: 20px; }
+
+.about__points h3 {
+  font-size: 1.15rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.about__points p { font-size: 0.98rem; }
+
+.about__link { margin-top: 40px; }
+
+/* ---- Breakpoints --------------------------------------------------------- */
+
+@media (max-width: 980px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .about__media {
+    max-width: 560px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+  }
+  .about__photo--main { aspect-ratio: 16 / 11; }
+}
+
+@media (max-width: 560px) {
+  .about__media { padding-right: 0; padding-bottom: 40px; }
+  .about__photo--sub { display: none; }
+  .about__badge { top: auto; bottom: 0; right: 16px; padding: 16px 20px; }
+  .about__badge strong { font-size: 2.1rem; }
+}

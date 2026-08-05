@@ -1,0 +1,140 @@
+/* ==========================================================================
+   SECTION 03 — SERVICES
+   ========================================================================== */
+
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.service {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 38px 34px 34px;
+  background: var(--white);
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease),
+    border-color 0.45s var(--ease);
+}
+
+/* Amber bar that grows across the top on hover. */
+.service::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+
+.service:hover {
+  transform: translateY(-6px);
+  border-color: transparent;
+  box-shadow: var(--shadow-md);
+}
+
+.service:hover::before { transform: scaleX(1); }
+
+.service__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+
+.service__icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  background: var(--concrete-100);
+  color: var(--amber-dark);
+  transition: background 0.45s var(--ease), color 0.45s var(--ease);
+}
+
+.service__icon svg { width: 28px; height: 28px; }
+
+.service:hover .service__icon {
+  background: var(--ink-900);
+  color: var(--amber);
+}
+
+.service__number {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--concrete-300);
+  transition: color 0.45s var(--ease);
+}
+
+.service:hover .service__number { color: var(--amber); }
+
+.service h3 {
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.service > p {
+  font-size: 0.98rem;
+  flex: 1;
+}
+
+.service__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 0;
+  padding: 0;
+}
+
+.service__tags li {
+  padding: 6px 12px;
+  border-radius: 100px;
+  background: var(--concrete-100);
+  border: 1px solid var(--line-light);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.service__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-light);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  transition: gap 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.service__link svg { width: 16px; height: 16px; }
+.service__link:hover { gap: 14px; color: var(--amber-dark); }
+
+/* ---- Breakpoints --------------------------------------------------------- */
+
+@media (max-width: 1040px) {
+  .services__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 680px) {
+  .services__grid { grid-template-columns: 1fr; }
+  .service { padding: 30px 26px; }
+  .section-head--split .btn { width: 100%; }
+}

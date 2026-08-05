@@ -1,0 +1,97 @@
+/* ==========================================================================
+   SECTION 07 — TESTIMONIALS
+   ========================================================================== */
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.testimonial {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 40px 34px 34px;
+  background: var(--concrete-100);
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-md);
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease),
+    background 0.45s var(--ease);
+}
+
+.testimonial:hover {
+  transform: translateY(-5px);
+  background: var(--white);
+  box-shadow: var(--shadow-md);
+}
+
+.testimonial__mark {
+  width: 40px;
+  height: 40px;
+  color: var(--amber);
+  opacity: 0.85;
+  margin-bottom: 22px;
+}
+
+.testimonial blockquote {
+  margin: 0;
+  flex: 1;
+  font-size: 1.02rem;
+  line-height: 1.8;
+  color: var(--text-body);
+}
+
+.testimonial figcaption {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-light);
+}
+
+.testimonial figcaption > span:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial__avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ink-900);
+  color: var(--amber);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.testimonial figcaption strong {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  line-height: 1.2;
+}
+
+.testimonial figcaption small {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* ---- Breakpoints --------------------------------------------------------- */
+
+@media (max-width: 980px) {
+  .testimonials__grid { grid-template-columns: 1fr; max-width: 640px; }
+}
+
+@media (max-width: 560px) {
+  .testimonial { padding: 30px 24px 26px; }
+}

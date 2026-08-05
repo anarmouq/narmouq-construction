@@ -1,0 +1,283 @@
+/* ==========================================================================
+   BASE — resets, typography, and the shared building blocks that every
+   section re-uses (container, section heading, buttons, tags).
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--white);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: var(--text-dark);
+  text-transform: uppercase;
+}
+
+h1 { font-size: clamp(2.9rem, 7vw, 5.4rem); }
+h2 { font-size: clamp(2.1rem, 4.4vw, 3.4rem); }
+h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); }
+
+p {
+  margin: 0;
+}
+
+::selection {
+  background: var(--amber);
+  color: var(--ink-900);
+}
+
+:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Layout helpers
+   -------------------------------------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section {
+  padding: var(--section-y) 0;
+  position: relative;
+}
+
+.section--light { background: var(--white); }
+.section--tint  { background: var(--concrete-100); }
+.section--dark  { background: var(--ink-900); color: var(--text-on-dark-muted); }
+.section--dark h1,
+.section--dark h2,
+.section--dark h3 { color: var(--white); }
+
+/* --------------------------------------------------------------------------
+   Section heading (used by every section — keeps the site consistent)
+   -------------------------------------------------------------------------- */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber-dark);
+  margin-bottom: 18px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 2px;
+  background: var(--amber);
+}
+
+.section--dark .eyebrow { color: var(--amber); }
+
+.section-head {
+  max-width: 680px;
+  margin-bottom: 56px;
+}
+
+.section-head p {
+  margin-top: 20px;
+  font-size: 1.05rem;
+}
+
+.section-head--split {
+  max-width: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.section-head--split > div { max-width: 680px; }
+
+/* Centred variant — used to break up the rhythm between sections. */
+.section-head--center {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.section-head--center .eyebrow::after {
+  content: "";
+  width: 34px;
+  height: 2px;
+  background: var(--amber);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 30px;
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--speed) var(--ease), color var(--speed) var(--ease),
+    border-color var(--speed) var(--ease), transform 0.2s var(--ease);
+}
+
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+.btn svg { width: 18px; height: 18px; }
+
+.btn--primary {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--ink-900);
+  box-shadow: 0 8px 24px rgba(240, 168, 28, 0.24);
+}
+.btn--primary:hover {
+  background: var(--amber-light);
+  border-color: var(--amber-light);
+  box-shadow: 0 12px 30px rgba(240, 168, 28, 0.34);
+}
+
+.btn--dark {
+  background: var(--ink-900);
+  border-color: var(--ink-900);
+  color: var(--white);
+}
+.btn--dark:hover {
+  background: var(--ink-700);
+  border-color: var(--ink-700);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--line-light);
+  color: var(--text-dark);
+}
+.btn--ghost:hover {
+  border-color: var(--ink-900);
+  background: var(--ink-900);
+  color: var(--white);
+}
+
+.btn--ghost-light {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--white);
+}
+.btn--ghost-light:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--ink-900);
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--amber);
+  transition: gap 0.3s var(--ease), color 0.3s var(--ease);
+}
+.text-link:hover { gap: 16px; color: var(--amber-dark); }
+.text-link svg { width: 17px; height: 17px; }
+
+.section--dark .text-link { color: var(--white); }
+.section--dark .text-link:hover { color: var(--amber); }
+
+/* --------------------------------------------------------------------------
+   Scroll reveal (add data-reveal to any element to animate it in)
+   -------------------------------------------------------------------------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-reveal] { opacity: 1; transform: none; }
+}
