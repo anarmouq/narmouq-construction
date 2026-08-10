@@ -8,6 +8,7 @@
 
 import { useState } from 'react'
 import { company, contact } from '../data/site'
+import Accent from '../components/Accent'
 import { ArrowRight, Clock, Mail, Phone, Pin } from '../components/Icons'
 import './Contact.css'
 
@@ -52,8 +53,9 @@ export default function Contact() {
     <section className="contact section section--tint" id="contact">
       <div className="container contact__grid">
         <div className="contact__info" data-reveal>
-          <p className="eyebrow">{contact.eyebrow}</p>
-          <h2>{contact.title}</h2>
+          <h2 className="contact__title">
+            <Accent text={contact.title} />
+          </h2>
           <p className="contact__text">{contact.text}</p>
 
           <ul className="contact__details">

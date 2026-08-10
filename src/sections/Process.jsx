@@ -4,15 +4,18 @@
    ========================================================================== */
 
 import { workProcess } from '../data/site'
+import Accent from '../components/Accent'
 import './Process.css'
 
 export default function Process() {
   return (
     <section className="process section section--light" id="process">
       <div className="container">
-        <div className="section-head section-head--center" data-reveal>
-          <p className="eyebrow">{workProcess.eyebrow}</p>
-          <h2>{workProcess.title}</h2>
+        <div className="sec-head" data-reveal>
+          <h2>
+            <Accent text={workProcess.title} />
+          </h2>
+          <span className="sec-head__rule" />
           <p>{workProcess.text}</p>
         </div>
 

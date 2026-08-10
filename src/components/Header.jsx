@@ -1,3 +1,9 @@
+/* ==========================================================================
+   HEADER — white bar with the logo lockup on the left and the navigation
+   on the right, exactly like the reference site. The bar is solid white
+   from the top so the gold mark always reads.
+   ========================================================================== */
+
 import { useEffect, useState } from 'react'
 import { company, nav } from '../data/site'
 import { onScroll } from '../hooks/useScrollReveal'
@@ -8,7 +14,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
-  useEffect(() => onScroll((y) => setScrolled(y > 30)), [])
+  useEffect(() => onScroll((y) => setScrolled(y > 20)), [])
 
   /* Lock page scrolling while the mobile menu is open. */
   useEffect(() => {
@@ -30,8 +36,13 @@ export default function Header() {
     <>
       <header className={`header ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
         <div className="header__inner container">
-          <a className="header__brand" href="#home" onClick={close} aria-label={`${company.fullName} — home`}>
-            <img src={company.logoMark} alt="" width="46" height="46" />
+          <a
+            className="header__brand"
+            href="#home"
+            onClick={close}
+            aria-label={`${company.fullName} — home`}
+          >
+            <img src={company.logoMark} alt="" width="52" height="52" />
             <span>
               <strong>{company.name}</strong>
               <small>Construction</small>
@@ -50,9 +61,6 @@ export default function Header() {
             <a className="header__phone" href={company.phoneHref}>
               <Phone />
               <span>{company.phone}</span>
-            </a>
-            <a className="btn btn--primary header__cta" href="#contact">
-              Get a quote
             </a>
           </div>
 

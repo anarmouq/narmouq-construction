@@ -3,13 +3,29 @@
    ========================================================================== */
 
 .footer {
+  position: relative;
   background: var(--ink-900);
   color: var(--text-on-dark-muted);
   padding-top: 84px;
-  border-top: 4px solid var(--amber);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Faint line-art skyline across the bottom of the band. */
+.footer__skyline {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: -1;
+  width: 100%;
+  height: 260px;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.09);
+  stroke-width: 1.5;
+  pointer-events: none;
 }
 
 .footer__grid {
+  position: relative;
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
   gap: 48px;
@@ -18,7 +34,7 @@
 
 .footer__logo {
   display: block;
-  width: 240px;
+  width: 230px;
   max-width: 70%;
 }
 
@@ -30,40 +46,44 @@
 .footer__blurb {
   margin-top: 22px;
   max-width: 330px;
-  font-size: 0.94rem;
-  line-height: 1.75;
+  font-size: 0.92rem;
+  line-height: 1.8;
 }
 
 .footer__social {
   display: flex;
   gap: 10px;
-  margin-top: 24px;
+  margin-top: 26px;
 }
 
 .footer__social a {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border: 1px solid var(--line-dark);
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  font-weight: 700;
+  border-radius: 50%;
+  font-size: 0.82rem;
+  font-weight: 400;
   color: var(--white);
-  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease),
+    border-color 0.3s var(--ease);
 }
 
 .footer__social a:hover {
-  background: var(--amber);
-  border-color: var(--amber);
+  background: var(--gold-bright);
+  border-color: var(--gold-bright);
   color: var(--ink-900);
 }
 
 .footer__col h4 {
-  font-size: 1.05rem;
-  letter-spacing: 0.12em;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--white);
-  margin-bottom: 22px;
+  margin-bottom: 24px;
 }
 
 .footer__col ul {
@@ -72,16 +92,16 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 13px;
 }
 
 .footer__col a {
-  font-size: 0.94rem;
+  font-size: 0.92rem;
   transition: color 0.3s var(--ease), padding-left 0.3s var(--ease);
 }
 
 .footer__col a:hover {
-  color: var(--amber);
+  color: var(--gold-bright);
   padding-left: 5px;
 }
 
@@ -89,36 +109,28 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-size: 0.94rem;
+  font-size: 0.92rem;
 }
 
 .footer__contact svg {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
   flex: none;
-  margin-top: 4px;
-  color: var(--amber);
+  margin-top: 5px;
+  color: var(--gold-bright);
 }
+
+/* ---- Bottom bar ---------------------------------------------------------- */
 
 .footer__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding-top: 24px;
-  padding-bottom: 28px;
+  position: relative;
+  padding: 22px 0;
   border-top: 1px solid var(--line-dark);
-  font-size: 0.86rem;
-}
-
-.footer__top {
-  font-weight: 600;
+  background: rgba(0, 0, 0, 0.25);
+  font-size: 0.82rem;
   letter-spacing: 0.06em;
-  transition: color 0.3s var(--ease);
+  text-align: center;
 }
-
-.footer__top:hover { color: var(--amber); }
 
 @media (max-width: 980px) {
   .footer__grid {
@@ -131,5 +143,4 @@
 @media (max-width: 560px) {
   .footer { padding-top: 60px; }
   .footer__grid { grid-template-columns: 1fr; }
-  .footer__bar { justify-content: center; text-align: center; }
 }

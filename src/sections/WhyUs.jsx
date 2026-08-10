@@ -1,25 +1,29 @@
 /* ==========================================================================
-   SECTION 06 — WHY US  (dark band)
+   SECTION 03 — WHY US  (light grey band)
+   A large serif word on the left, a ticked list of reasons on the right —
+   the same layout the reference site uses under its About block.
    Text & reasons: src/data/site.js → `whyUs`
    ========================================================================== */
 
 import { whyUs } from '../data/site'
+import Accent from '../components/Accent'
 import { ArrowRight, Check } from '../components/Icons'
 import './WhyUs.css'
 
 export default function WhyUs() {
   return (
-    <section className="why section section--dark" id="why">
-      <div className="why__bg" aria-hidden="true">
-        <img src={whyUs.image} alt="" loading="lazy" />
-      </div>
+    <section className="why section section--tint" id="why">
+      <span className="why__watermark" aria-hidden="true">
+        {whyUs.watermark}
+      </span>
 
       <div className="container why__grid">
         <div className="why__intro" data-reveal>
-          <p className="eyebrow">{whyUs.eyebrow}</p>
-          <h2>{whyUs.title}</h2>
+          <h2>
+            <Accent text={whyUs.title} />
+          </h2>
           <p className="why__text">{whyUs.text}</p>
-          <a className="btn btn--primary why__cta" href={whyUs.cta.href}>
+          <a className="btn btn--dark why__cta" href={whyUs.cta.href}>
             {whyUs.cta.label} <ArrowRight />
           </a>
         </div>

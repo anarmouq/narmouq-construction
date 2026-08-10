@@ -6,6 +6,7 @@
 
 import { useMemo, useState } from 'react'
 import { projects } from '../data/site'
+import Accent from '../components/Accent'
 import { ArrowRight } from '../components/Icons'
 import './Projects.css'
 
@@ -23,15 +24,12 @@ export default function Projects() {
   return (
     <section className="projects section section--tint" id="projects">
       <div className="container">
-        <div className="section-head section-head--split" data-reveal>
-          <div>
-            <p className="eyebrow">{projects.eyebrow}</p>
-            <h2>{projects.title}</h2>
-            <p>{projects.text}</p>
-          </div>
-          <a className="text-link" href={projects.cta.href}>
-            {projects.cta.label} <ArrowRight />
-          </a>
+        <div className="sec-head" data-reveal>
+          <h2>
+            <Accent text={projects.title} />
+          </h2>
+          <span className="sec-head__rule" />
+          <p>{projects.text}</p>
         </div>
 
         <div className="projects__filters" data-reveal role="tablist" aria-label="Filter projects">
@@ -69,6 +67,12 @@ export default function Projects() {
               </span>
             </article>
           ))}
+        </div>
+
+        <div className="projects__cta" data-reveal>
+          <a className="btn btn--dark" href={projects.cta.href}>
+            {projects.cta.label} <ArrowRight />
+          </a>
         </div>
       </div>
     </section>

@@ -8,10 +8,10 @@ export const company = {
   name: 'Narmouq',
   fullName: 'Narmouq Construction',
   tagline: 'Building with purpose',
-  logoFull: '/logo.png',        // full lockup, dark wordmark — for light backgrounds
-  logoFullLight: '/logo-light.png', // full lockup, white wordmark — for dark backgrounds (hero)
-  logoMark: '/logo1.png',       // gold mark on dark — used on dark backgrounds
-  logoMarkLight: '/logo3.png',  // gold mark on white — used on light backgrounds
+  logoFull: '/logo.png',            // full lockup on its grey backdrop
+  logoFullLight: '/logo-light.png', // full lockup, white wordmark — for dark backgrounds (footer)
+  logoMark: '/logo1.png',           // gold mark on a transparent background — works anywhere
+  logoMarkDark: '/logo13.png',      // gold mark on the dark navy tile
   phone: '+962 7 0000 0000',
   phoneHref: 'tel:+96270000000',
   whatsapp: 'https://wa.me/96270000000',
@@ -31,29 +31,56 @@ export const nav = [
   { label: 'Services', href: '#services' },
   { label: 'Process', href: '#process' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Team', href: '#team' },
   { label: 'Contact', href: '#contact' },
 ]
 
-/* ---- 01. HERO ---------------------------------------------------------- */
+/* ---- 01. HERO ----------------------------------------------------------
+   A full-bleed slider. Add or remove a `slides` entry and the arrows, dots
+   and autoplay all adjust themselves — nothing else needs changing.
+   Each headline is written on two lines so it stacks like the reference.  */
 export const hero = {
-  title: 'We build what lasts.',
-  text: 'Residential, commercial and industrial projects delivered on time, on budget and to a standard we are happy to put our name on.',
   primaryCta: { label: 'Request a quote', href: '#contact' },
-  secondaryCta: { label: 'See our work', href: '#projects' },
-  image:
-    'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1920&q=80',
-  highlights: [
+  autoplayMs: 6500,
+  slides: [
+    {
+      line1: 'Building what',
+      line2: 'stands for decades.',
+      text: 'Residential, commercial and industrial projects delivered on time and on budget.',
+      image:
+        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1920&q=80',
+    },
+    {
+      line1: 'Big projects',
+      line2: 'need bigger standards.',
+      text: 'Certified materials, tested workmanship and a documented quality checklist on every site.',
+      image:
+        'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1920&q=80',
+    },
+    {
+      line1: 'Shaping tomorrow’s',
+      line2: 'skyline.',
+      text: 'From foundations to final handover — one accountable team from start to finish.',
+      image:
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80',
+    },
+  ],
+}
+
+/* ---- 02. ABOUT ----------------------------------------------------------
+   Wrap any word in **double asterisks** to print it in the brand gold,
+   the way the reference site highlights key words inside its paragraphs.  */
+export const about = {
+  eyebrow: 'Who we are',
+  title: 'About **Narmouq** Construction',
+  text: 'From the first site visit to the final handover, one team stays with your project. **Clear pricing**, weekly progress reports and no surprises — that is how we have grown almost entirely on repeat clients and referrals.',
+  subtitle: 'Building the foundations for a sustainable future',
+  subtext: 'A licensed general contractor working across residential, commercial and industrial projects — delivering structures that are engineered to last and finished to a standard we are happy to put our name on.',
+  stats: [
     { value: '12+', label: 'Years building' },
     { value: '80+', label: 'Projects delivered' },
     { value: '100%', label: 'Safety record' },
   ],
-}
-
-/* ---- 02. ABOUT --------------------------------------------------------- */
-export const about = {
-  eyebrow: 'Who we are',
-  title: 'A contractor that treats your project like its own.',
-  text: 'From the first site visit to the final handover, one team stays with your project. Clear pricing, weekly progress reports and no surprises — that is how we have grown almost entirely on repeat clients and referrals.',
   points: [
     {
       title: 'One accountable team',
@@ -75,10 +102,13 @@ export const about = {
   badge: { value: '12', label: 'Years of experience' },
 }
 
-/* ---- 03. SERVICES ------------------------------------------------------ */
+/* ---- 03. SERVICES -------------------------------------------------------
+   Shown as a 3D carousel: the middle card is in focus, the cards either side
+   are scaled back and faded. Each item needs an `image` — portrait crops
+   (roughly 3:4) look best.                                                */
 export const services = {
   eyebrow: 'What we do',
-  title: 'Complete construction services.',
+  title: 'Our **Services**',
   text: 'One contractor for the whole scope — design coordination, permits, structure, finishing and handover.',
   items: [
     {
@@ -87,6 +117,8 @@ export const services = {
       title: 'General Contracting',
       text: 'Full project delivery from planning and permits through construction and handover.',
       tags: ['Permits', 'Site management', 'Handover'],
+      image:
+        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80',
     },
     {
       number: '02',
@@ -94,6 +126,8 @@ export const services = {
       title: 'Commercial Builds',
       text: 'Durable, efficient spaces for offices, retail, hospitality and light industry.',
       tags: ['Fit-out', 'MEP', 'Shell & core'],
+      image:
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
     },
     {
       number: '03',
@@ -101,6 +135,8 @@ export const services = {
       title: 'Residential Projects',
       text: 'Villas and apartment buildings built around comfort, strong materials and precise finishing.',
       tags: ['Villas', 'Apartments', 'Finishing'],
+      image:
+        'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=800&q=80',
     },
     {
       number: '04',
@@ -108,6 +144,8 @@ export const services = {
       title: 'Renovation & Retrofit',
       text: 'Structural upgrades and remodels that improve function, appearance and property value.',
       tags: ['Remodel', 'Structural', 'Energy'],
+      image:
+        'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80',
     },
     {
       number: '05',
@@ -115,6 +153,8 @@ export const services = {
       title: 'Infrastructure & Sitework',
       text: 'Excavation, foundations, roads, drainage and site preparation done to spec.',
       tags: ['Excavation', 'Foundations', 'Roads'],
+      image:
+        'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80',
     },
     {
       number: '06',
@@ -122,6 +162,8 @@ export const services = {
       title: 'Design & Build',
       text: 'A single contract covering design, engineering and construction to save time and cost.',
       tags: ['Concept', 'Engineering', 'Delivery'],
+      image:
+        'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80',
     },
   ],
 }
@@ -129,7 +171,7 @@ export const services = {
 /* ---- 04. PROCESS ------------------------------------------------------- */
 export const workProcess = {
   eyebrow: 'How we work',
-  title: 'Four clear stages, zero guesswork.',
+  title: 'How we **Work**',
   text: 'You always know what is happening, what comes next and what it costs.',
   steps: [
     {
@@ -158,7 +200,7 @@ export const workProcess = {
 /* ---- 05. PROJECTS ------------------------------------------------------ */
 export const projects = {
   eyebrow: 'Selected work',
-  title: 'Projects that speak for themselves.',
+  title: 'Selected **Projects**',
   text: 'A sample of recent handovers across residential, commercial and infrastructure work.',
   cta: { label: 'Start your project', href: '#contact' },
   items: [
@@ -204,7 +246,8 @@ export const projects = {
 /* ---- 06. WHY US (dark band) -------------------------------------------- */
 export const whyUs = {
   eyebrow: 'Why Narmouq',
-  title: 'Precision on site. Clarity off it.',
+  title: 'Why **Narmouq**',
+  watermark: 'WHY',
   text: 'We keep the promises that most contractors only make: a fixed programme, an open budget and a site you would be comfortable walking a client through at any hour.',
   cta: { label: 'Talk to our team', href: '#contact' },
   image:
@@ -217,10 +260,49 @@ export const whyUs = {
   ],
 }
 
-/* ---- 07. TESTIMONIALS -------------------------------------------------- */
+/* ---- 07. TEAM ------------------------------------------------------------
+   PHOTOS: drop pic1.jpg, pic2.jpg and pic3.jpg into the public/ folder and
+   they appear here automatically. Until then each card shows a plain grey
+   panel instead of a broken image. Portrait crops (roughly 4:5) look best.
+   If you save the files as .png instead, change the extensions below.
+
+   The names, roles and bios are still placeholders — replace them with your
+   real colleagues. Add or remove a member and the row re-flows on its own. */
+export const team = {
+  title: 'Meet the **Team**',
+  text: 'The people who plan, price and build your project — the same faces from the first site visit to handover.',
+  members: [
+    {
+      name: 'Ammar Narmouq',
+      role: 'Founder & Managing Director',
+      bio: 'Twelve years running site operations, and the final signature on every quotation we issue.',
+      image: '/pic1.jpg',
+    },
+    {
+      name: 'Amr Narmouq',
+      role: 'Head of Engineering',
+      bio: 'Leads design coordination and structural review, from concept drawings through to as-builts.',
+      image: '/pic2.jpg',
+    },
+    {
+      name: 'Hassan Abzakh',
+      role: 'HEAD OF IT & SITE OPERATIONS',
+      bio: 'Owns the programme on site — scheduling, subcontractors, safety and the weekly progress report.',
+      image: '/pic3.jpg',
+    },
+  ],
+}
+
+/* ---- 08. TESTIMONIALS -------------------------------------------------- */
 export const testimonials = {
   eyebrow: 'Client feedback',
-  title: 'Trusted by the people we build for.',
+  title: 'Our Happy **Clients**',
+  autoplayMs: 7000,
+  /* Client logo wall (the scrolling strip under the quotes).
+     Add entries as { name: 'Company', logo: '/clients/company.png' } and drop
+     the image files in public/clients/. Leave the array empty and the strip
+     simply does not render. */
+  clients: [],
   items: [
     {
       quote:
@@ -246,7 +328,7 @@ export const testimonials = {
 /* ---- 08. CONTACT ------------------------------------------------------- */
 export const contact = {
   eyebrow: 'Get in touch',
-  title: "Let's build something exceptional.",
+  title: 'Get in **Touch**',
   text: 'Send us your project details and we will come back with a scope, a programme and a clear price.',
   serviceOptions: [
     'General Contracting',

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   HEADER + MOBILE DRAWER
+   HEADER + MOBILE DRAWER  (white bar)
    ========================================================================== */
 
 .header {
@@ -9,29 +9,13 @@
   height: var(--header-h);
   display: flex;
   align-items: center;
-  background: transparent;
-  transition: background var(--speed) var(--ease), box-shadow var(--speed) var(--ease),
-    height var(--speed) var(--ease);
-}
-
-.header::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 1px;
-  background: var(--line-dark);
-  opacity: 1;
-  transition: opacity var(--speed) var(--ease);
+  background: var(--white);
+  transition: box-shadow var(--speed) var(--ease), height var(--speed) var(--ease);
 }
 
 .header.is-scrolled {
-  background: rgba(11, 17, 25, 0.94);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 26px rgba(20, 24, 30, 0.08);
 }
-
-.header.is-scrolled::after { opacity: 0; }
-.header.is-open { background: var(--ink-900); }
 
 .header__inner {
   display: flex;
@@ -50,10 +34,9 @@
 }
 
 .header__brand img {
-  width: 46px;
-  height: 46px;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
   flex: none;
 }
 
@@ -65,20 +48,20 @@
 
 .header__brand strong {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--white);
+  color: var(--text-dark);
 }
 
 .header__brand small {
-  font-size: 0.6rem;
-  font-weight: 600;
-  letter-spacing: 0.42em;
+  font-size: 0.55rem;
+  font-weight: 400;
+  letter-spacing: 0.44em;
   text-transform: uppercase;
-  color: var(--amber);
-  margin-top: 4px;
+  color: var(--gold);
+  margin-top: 5px;
 }
 
 /* ---- Desktop nav -------------------------------------------------------- */
@@ -91,12 +74,12 @@
 
 .header__nav a {
   position: relative;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-on-dark);
-  padding: 6px 0;
+  color: var(--text-dark);
+  padding: 8px 0;
   transition: color 0.3s var(--ease);
 }
 
@@ -104,14 +87,14 @@
   content: "";
   position: absolute;
   inset: auto 0 0 0;
-  height: 2px;
-  background: var(--amber);
+  height: 1px;
+  background: var(--gold);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.35s var(--ease);
 }
 
-.header__nav a:hover { color: var(--amber); }
+.header__nav a:hover { color: var(--gold); }
 .header__nav a:hover::after { transform: scaleX(1); }
 
 /* ---- Actions ------------------------------------------------------------ */
@@ -126,16 +109,14 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text-on-dark);
+  font-size: 0.86rem;
+  font-weight: 400;
+  color: var(--text-dark);
   transition: color 0.3s var(--ease);
 }
 
-.header__phone svg { width: 18px; height: 18px; color: var(--amber); }
-.header__phone:hover { color: var(--amber); }
-
-.header__cta { padding: 12px 24px; }
+.header__phone svg { width: 18px; height: 18px; color: var(--gold); }
+.header__phone:hover { color: var(--gold); }
 
 /* ---- Burger ------------------------------------------------------------- */
 
@@ -144,11 +125,10 @@
   flex-direction: column;
   justify-content: center;
   gap: 6px;
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   padding: 0;
-  border: 1px solid var(--line-dark);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-light);
   background: transparent;
   cursor: pointer;
 }
@@ -156,15 +136,15 @@
 .header__burger span {
   display: block;
   width: 22px;
-  height: 2px;
+  height: 1.5px;
   margin: 0 auto;
-  background: var(--white);
+  background: var(--text-dark);
   transition: transform 0.35s var(--ease), opacity 0.2s var(--ease);
 }
 
-.header.is-open .header__burger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.header.is-open .header__burger span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
 .header.is-open .header__burger span:nth-child(2) { opacity: 0; }
-.header.is-open .header__burger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+.header.is-open .header__burger span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
 /* ---- Drawer ------------------------------------------------------------- */
 
@@ -180,8 +160,8 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 32px;
-  background: var(--ink-900);
-  border-left: 1px solid var(--line-dark);
+  background: var(--white);
+  border-left: 1px solid var(--line-light);
   transform: translateX(105%);
   transition: transform 0.45s var(--ease);
   overflow-y: auto;
@@ -196,13 +176,11 @@
 
 .drawer nav a {
   padding: 18px 0;
-  border-bottom: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-light);
   font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--white);
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: var(--text-dark);
   opacity: 0;
   transform: translateX(20px);
   transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), color 0.3s var(--ease);
@@ -214,7 +192,7 @@
   transition-delay: calc(0.06s * var(--i) + 0.1s);
 }
 
-.drawer nav a:hover { color: var(--amber); }
+.drawer nav a:hover { color: var(--gold); }
 
 .drawer__foot {
   display: flex;
@@ -229,11 +207,10 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-weight: 600;
-  color: var(--text-on-dark);
+  color: var(--text-dark);
 }
 
-.drawer__phone svg { width: 18px; height: 18px; color: var(--amber); }
+.drawer__phone svg { width: 18px; height: 18px; color: var(--gold); }
 
 .drawer__scrim {
   position: fixed;
@@ -241,7 +218,7 @@
   z-index: 98;
   border: 0;
   padding: 0;
-  background: rgba(6, 10, 15, 0.6);
+  background: rgba(20, 24, 30, 0.45);
   backdrop-filter: blur(2px);
   opacity: 0;
   visibility: hidden;
@@ -254,7 +231,7 @@
 /* ---- Breakpoints -------------------------------------------------------- */
 
 @media (max-width: 1160px) {
-  .header__nav { gap: 24px; }
+  .header__nav { gap: 22px; }
   .header__phone span { display: none; }
 }
 
@@ -262,7 +239,8 @@
   .header__nav,
   .header__actions { display: none; }
   .header__burger { display: flex; }
-  .header__brand strong { font-size: 1.3rem; }
+  .header__brand img { width: 42px; height: 42px; }
+  .header__brand strong { font-size: 1.35rem; }
 }
 
 @media (min-width: 981px) {

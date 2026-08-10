@@ -18,6 +18,22 @@ export function ArrowRight(props) {
   )
 }
 
+export function ArrowLeft(props) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M19 12H6M11 6l-6 6 6 6" />
+    </svg>
+  )
+}
+
+export function ChevronDown(props) {
+  return (
+    <svg {...base} {...props}>
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  )
+}
+
 export function Phone(props) {
   return (
     <svg {...base} {...props}>

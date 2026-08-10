@@ -1,61 +1,105 @@
 /* ==========================================================================
    SECTION 01 — HERO
-   Text & images: src/data/site.js → `hero`
-   The centred logo is `company.logoFullLight` (the white-wordmark version of
-   logo.png, generated so it reads on the dark background).
+   A full-bleed image slider sitting directly under the white header, with the
+   headline set low and left and the arrows in the bottom-right corner.
+   Slides: src/data/site.js → `hero.slides`
    ========================================================================== */
 
-import { company, hero } from '../data/site'
-import { ArrowRight } from '../components/Icons'
+import { useCallback, useEffect, useState } from 'react'
+import { hero } from '../data/site'
+import { ArrowLeft, ArrowRight } from '../components/Icons'
 import './Hero.css'
 
 export default function Hero() {
+  const slides = hero.slides
+  const count = slides.length
+  const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
+
+  const go = useCallback(
+    (step) => setIndex((current) => (current + step + count) % count),
+    [count],
+  )
+
+  /* Autoplay — pauses while the pointer is over the hero. */
+  useEffect(() => {
+    if (paused || count < 2) return undefined
+    const id = window.setInterval(() => go(1), hero.autoplayMs)
+    return () => window.clearInterval(id)
+  }, [paused, count, go])
+
+  const slide = slides[index]
+
   return (
-    <section className="hero" id="home">
-      <div className="hero__bg">
-        <img src={hero.image} alt="" fetchPriority="high" />
-        <div className="hero__overlay" />
-        <div className="hero__grid" />
+    <section
+      className="hero"
+      id="home"
+      aria-roledescription="carousel"
+      aria-label="Featured work"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="hero__stage">
+        {slides.map((item, i) => (
+          <div className={`hero__slide ${i === index ? 'is-active' : ''}`} key={item.image}>
+            <img
+              src={item.image}
+              alt=""
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchPriority={i === 0 ? 'high' : 'auto'}
+            />
+          </div>
+        ))}
+        <span className="hero__veil" aria-hidden="true" />
       </div>
 
       <div className="container hero__inner">
-        <div className="hero__content">
-          <div className="hero__logo">
-            <span className="hero__logo-glow" aria-hidden="true" />
-            <img src={company.logoFullLight} alt={company.fullName} fetchPriority="high" />
-          </div>
-
-          <span className="hero__rule" aria-hidden="true" />
-
-          <h1>{hero.title}</h1>
-          <p className="hero__text">{hero.text}</p>
-
-          <div className="hero__actions">
-            <a className="btn btn--primary" href={hero.primaryCta.href}>
-              {hero.primaryCta.label} <ArrowRight />
-            </a>
-            <a className="btn btn--ghost-light" href={hero.secondaryCta.href}>
-              {hero.secondaryCta.label}
-            </a>
-          </div>
+        {/* `key` restarts the entrance animation on every slide change. */}
+        <div className="hero__copy" key={index}>
+          <h1>
+            <span>{slide.line1}</span>
+            <span>{slide.line2}</span>
+          </h1>
+          <p>{slide.text}</p>
+          <a className="btn btn--primary" href={hero.primaryCta.href}>
+            {hero.primaryCta.label} <ArrowRight />
+          </a>
         </div>
       </div>
 
-      <div className="hero__stats">
-        <div className="container hero__stats-grid">
-          {hero.highlights.map((item) => (
-            <div className="hero__stat" key={item.label}>
-              <strong>{item.value}</strong>
-              <span>{item.label}</span>
-            </div>
+      <div className="hero__controls">
+        <div className="hero__dots dots">
+          {slides.map((item, i) => (
+            <button
+              key={item.image}
+              type="button"
+              className={i === index ? 'is-active' : ''}
+              aria-label={`Go to slide ${i + 1}`}
+              aria-current={i === index}
+              onClick={() => setIndex(i)}
+            />
           ))}
         </div>
-      </div>
 
-      <a className="hero__scroll" href="#about" aria-label="Scroll to about section">
-        <span>Scroll</span>
-        <i />
-      </a>
+        <div className="hero__arrows">
+          <button
+            className="round-btn round-btn--light"
+            type="button"
+            aria-label="Previous slide"
+            onClick={() => go(-1)}
+          >
+            <ArrowLeft />
+          </button>
+          <button
+            className="round-btn round-btn--light"
+            type="button"
+            aria-label="Next slide"
+            onClick={() => go(1)}
+          >
+            <ArrowRight />
+          </button>
+        </div>
+      </div>
     </section>
   )
 }

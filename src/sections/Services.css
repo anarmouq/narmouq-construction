@@ -1,140 +1,198 @@
 /* ==========================================================================
-   SECTION 03 — SERVICES
+   SECTION 04 — SERVICES  (3D coverflow carousel)
    ========================================================================== */
 
-.services__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 26px;
-}
+.services { overflow: hidden; }
 
-.service {
+/* ---- Stage -------------------------------------------------------------- */
+
+.svc-stage {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 38px 34px 34px;
-  background: var(--white);
-  border: 1px solid var(--line-light);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease),
-    border-color 0.45s var(--ease);
+  height: clamp(430px, 44vw, 560px);
+  margin: 0 auto;
+  perspective: 1600px;
+  touch-action: pan-y;
+  outline-offset: 12px;
 }
 
-/* Amber bar that grows across the top on hover. */
-.service::before {
-  content: "";
+/* ---- Card --------------------------------------------------------------- */
+
+.svc-card {
+  --card-w: clamp(200px, 21vw, 268px);
+
   position: absolute;
-  inset: 0 0 auto 0;
-  height: 4px;
-  background: var(--amber);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s var(--ease);
+  top: 50%;
+  left: 50%;
+  width: var(--card-w);
+  padding: 10px 10px 22px;
+  background: var(--white);
+  box-shadow: 0 18px 44px rgba(20, 24, 30, 0.14);
+  transform: translate(-50%, -50%) translateX(var(--x)) scale(var(--s));
+  transition: transform 0.65s var(--ease), opacity 0.65s var(--ease),
+    box-shadow 0.65s var(--ease);
+  will-change: transform, opacity;
 }
 
-.service:hover {
-  transform: translateY(-6px);
-  border-color: transparent;
-  box-shadow: var(--shadow-md);
+/* Only the focused card gets the lifted, full-strength shadow. */
+.svc-card.is-focused {
+  box-shadow: 0 26px 60px rgba(20, 24, 30, 0.2);
 }
 
-.service:hover::before { transform: scaleX(1); }
-
-.service__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 26px;
-}
-
-.service__icon {
-  display: grid;
-  place-items: center;
-  width: 60px;
-  height: 60px;
-  border-radius: var(--radius-md);
-  background: var(--concrete-100);
-  color: var(--amber-dark);
-  transition: background 0.45s var(--ease), color 0.45s var(--ease);
-}
-
-.service__icon svg { width: 28px; height: 28px; }
-
-.service:hover .service__icon {
-  background: var(--ink-900);
-  color: var(--amber);
-}
-
-.service__number {
-  font-family: var(--font-display);
-  font-size: 2.6rem;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--concrete-300);
-  transition: color 0.45s var(--ease);
-}
-
-.service:hover .service__number { color: var(--amber); }
-
-.service h3 {
-  font-size: 1.4rem;
-  letter-spacing: 0.04em;
-  margin-bottom: 12px;
-}
-
-.service > p {
-  font-size: 0.98rem;
-  flex: 1;
-}
-
-.service__tags {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 24px 0 0;
+/* Click target that brings a side card into focus. Removed once focused so
+   the Enquire link underneath becomes clickable. */
+.svc-card__hit {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border: 0;
   padding: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
-.service__tags li {
-  padding: 6px 12px;
-  border-radius: 100px;
-  background: var(--concrete-100);
-  border: 1px solid var(--line-light);
-  font-size: 0.72rem;
+.svc-card.is-focused .svc-card__hit { display: none; }
+
+/* ---- Card image --------------------------------------------------------- */
+
+.svc-card__media {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--paper-tint);
+}
+
+.svc-card__media > img:first-child {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.55);
+  transition: filter 0.65s var(--ease), transform 0.9s var(--ease);
+}
+
+.svc-card.is-focused .svc-card__media > img:first-child {
+  filter: grayscale(0);
+}
+
+.svc-card.is-focused:hover .svc-card__media > img:first-child {
+  transform: scale(1.05);
+}
+
+/* The gold mark watermarked into the top-left corner of every card. */
+.svc-card__mark {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  opacity: 0.95;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  pointer-events: none;
+}
+
+/* ---- Card caption ------------------------------------------------------- */
+
+.svc-card__body {
+  padding: 20px 12px 0;
+  text-align: center;
+}
+
+.svc-card__body h3 {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--text-dark);
 }
 
-.service__link {
+/* The description and link only appear on the card in focus — the side cards
+   stay as clean image tiles, like the reference. The 0fr → 1fr grid row is
+   what lets the block animate from zero height. */
+.svc-card__extra {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.55s var(--ease), opacity 0.4s var(--ease);
+}
+
+.svc-card__extra > div { overflow: hidden; }
+
+.svc-card.is-focused .svc-card__extra {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition-delay: 0.1s;
+}
+
+.svc-card__body p {
+  margin-top: 10px;
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+.svc-card__link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 26px;
-  padding-top: 20px;
-  border-top: 1px solid var(--line-light);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  margin-top: 14px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--text-dark);
-  transition: gap 0.3s var(--ease), color 0.3s var(--ease);
+  color: var(--gold);
 }
 
-.service__link svg { width: 16px; height: 16px; }
-.service__link:hover { gap: 14px; color: var(--amber-dark); }
+.svc-card__link svg { width: 15px; height: 15px; }
+.svc-card__link:hover { gap: 13px; }
+
+/* ---- Controls: arrows + draggable progress track ------------------------ */
+
+.svc-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 42px;
+}
+
+.svc-track {
+  position: relative;
+  width: min(420px, 55vw);
+  height: 22px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+/* The hairline the thumb slides along. */
+.svc-track::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: var(--line-light);
+}
+
+.svc-track__thumb {
+  position: absolute;
+  top: 50%;
+  left: var(--p);
+  width: var(--w);
+  height: 3px;
+  transform: translateY(-50%);
+  background: var(--gold);
+  transition: left 0.4s var(--ease);
+}
 
 /* ---- Breakpoints --------------------------------------------------------- */
 
-@media (max-width: 1040px) {
-  .services__grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 680px) {
-  .services__grid { grid-template-columns: 1fr; }
-  .service { padding: 30px 26px; }
-  .section-head--split .btn { width: 100%; }
+@media (max-width: 700px) {
+  .svc-stage { height: clamp(400px, 108vw, 500px); }
+  .svc-card { --card-w: min(210px, 58vw); }
+  .svc-card__body p { display: none; }
+  .svc-controls { gap: 14px; }
+  .svc-track { width: min(260px, 46vw); }
 }

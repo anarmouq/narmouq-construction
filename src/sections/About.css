@@ -2,14 +2,58 @@
    SECTION 02 — ABOUT
    ========================================================================== */
 
+/* ---- Intro block (serif title, lead paragraph, hairline, sub-heading) ---- */
+
+.about__intro {
+  max-width: 900px;
+  margin-bottom: 72px;
+}
+
+.about__title {
+  font-size: clamp(1.55rem, 3vw, 2.3rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.about__lead {
+  margin-top: 26px;
+  font-size: 1.02rem;
+  line-height: 1.9;
+  color: var(--text-body);
+}
+
+/* Short hairline separating the two halves of the intro. */
+.about__divider {
+  display: block;
+  width: min(380px, 60%);
+  height: 1px;
+  margin: 42px 0;
+  background: var(--line-light);
+}
+
+.about__subtitle {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-dark);
+}
+
+.about__subtext {
+  margin-top: 14px;
+  line-height: 1.9;
+}
+
+/* ---- Photos + points ---------------------------------------------------- */
+
 .about__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   align-items: center;
 }
-
-/* ---- Images ------------------------------------------------------------- */
 
 .about__media {
   position: relative;
@@ -19,7 +63,6 @@
 
 .about__photo {
   overflow: hidden;
-  border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
 }
 
@@ -52,38 +95,32 @@
   flex-direction: column;
   gap: 4px;
   padding: 20px 24px;
-  background: var(--amber);
-  border-radius: var(--radius-md);
+  background: var(--gold);
   box-shadow: var(--shadow-md);
-  color: var(--ink-900);
+  color: var(--white);
   max-width: 150px;
 }
 
 .about__badge strong {
   font-family: var(--font-display);
-  font-size: 2.8rem;
-  font-weight: 700;
+  font-size: 3rem;
+  font-weight: 600;
   line-height: 1;
 }
 
 .about__badge span {
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* ---- Copy --------------------------------------------------------------- */
 
-.about__text {
-  margin-top: 22px;
-  font-size: 1.05rem;
-}
-
 .about__points {
   list-style: none;
-  margin: 40px 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -101,26 +138,58 @@
   flex: none;
   width: 42px;
   height: 42px;
-  border-radius: var(--radius-sm);
-  background: var(--concrete-200);
-  color: var(--amber-dark);
-  transition: background 0.35s var(--ease), color 0.35s var(--ease);
+  border: 1px solid var(--line-light);
+  color: var(--gold);
+  transition: background 0.35s var(--ease), color 0.35s var(--ease),
+    border-color 0.35s var(--ease);
 }
 
 .about__points li:hover .about__check {
-  background: var(--amber);
-  color: var(--ink-900);
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
 }
 
-.about__check svg { width: 20px; height: 20px; }
+.about__check svg { width: 19px; height: 19px; }
 
 .about__points h3 {
-  font-size: 1.15rem;
-  letter-spacing: 0.05em;
-  margin-bottom: 6px;
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
 }
 
-.about__points p { font-size: 0.98rem; }
+.about__points p { font-size: 0.96rem; }
+
+/* Three figures under the points. */
+.about__stats {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 44px 0 0;
+  padding: 30px 0 0;
+  border-top: 1px solid var(--line-light);
+}
+
+.about__stats strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.4vw, 2.9rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.about__stats span {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
 
 .about__link { margin-top: 40px; }
 
@@ -143,5 +212,6 @@
   .about__media { padding-right: 0; padding-bottom: 40px; }
   .about__photo--sub { display: none; }
   .about__badge { top: auto; bottom: 0; right: 16px; padding: 16px 20px; }
-  .about__badge strong { font-size: 2.1rem; }
+  .about__badge strong { font-size: 2.2rem; }
+  .about__stats { grid-template-columns: 1fr; gap: 22px; }
 }
