@@ -4,7 +4,7 @@
 
 .hero {
   position: relative;
-  margin-top: var(--header-h);
+  margin-top: 0;               /* the floating header sits on top of the hero */
   height: clamp(460px, 80vh, 840px);
   display: flex;
   align-items: flex-end;

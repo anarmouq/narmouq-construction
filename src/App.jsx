@@ -1,40 +1,51 @@
 /* ==========================================================================
-   NARMOUQ CONSTRUCTION — page order
-   Each section below is a separate file in src/sections/.
-   To reorder the page, move a line. To remove a section, delete its line.
+   NARMOUQ CONSTRUCTION — pages
+   Every link in the top bar opens its own page. Each page is a file in
+   src/pages/ and is made of sections from src/sections/.
+   To add a page: create it in src/pages/, add a <Route> below, and add a
+   link to `nav` in src/data/site.js.
    All wording, images and numbers live in src/data/site.js
    ========================================================================== */
 
+import { useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Header from './components/Header'
-import Hero from './sections/Hero'                 // 01 — Hero            #home
-import About from './sections/About'               // 02 — About           #about
-import WhyUs from './sections/WhyUs'               // 03 — Why us          #why
-import Services from './sections/Services'         // 04 — Services        #services
-import Projects from './sections/Projects'         // 05 — Projects        #projects
-import Process from './sections/Process'           // 06 — Process         #process
-import Team from './sections/Team'                 // 07 — Team            #team
-import Testimonials from './sections/Testimonials' // 08 — Testimonials    #testimonials
-import Contact from './sections/Contact'           // 09 — Contact         #contact
 import Footer from './components/Footer'
-import { useScrollReveal } from './hooks/useScrollReveal'
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import ServicesPage from './pages/ServicesPage'
+import ProcessPage from './pages/ProcessPage'
+import ProjectsPage from './pages/ProjectsPage'
+import TeamPage from './pages/TeamPage'
+import ContactPage from './pages/ContactPage'
+import NotFoundPage from './pages/NotFoundPage'
+
+/* Start every new page at the top instead of keeping the old scroll spot. */
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [pathname])
+  return null
+}
 
 export default function App() {
-  useScrollReveal()
-
   return (
     <>
+      <ScrollToTop />
       <Header />
 
       <main>
-        <Hero />
-        <About />
-        <WhyUs />
-        <Services />
-        <Projects />
-        <Process />
-        <Team />
-        <Testimonials />
-        <Contact />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/process" element={<ProcessPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/team" element={<TeamPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </main>
 
       <Footer />

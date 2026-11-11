@@ -8,6 +8,7 @@
 import { whyUs } from '../data/site'
 import Accent from '../components/Accent'
 import { ArrowRight, Check } from '../components/Icons'
+import SmartLink from '../components/SmartLink'
 import './WhyUs.css'
 
 export default function WhyUs() {
@@ -23,9 +24,9 @@ export default function WhyUs() {
             <Accent text={whyUs.title} />
           </h2>
           <p className="why__text">{whyUs.text}</p>
-          <a className="btn btn--dark why__cta" href={whyUs.cta.href}>
+          <SmartLink className="btn btn--dark why__cta" href={whyUs.cta.href}>
             {whyUs.cta.label} <ArrowRight />
-          </a>
+          </SmartLink>
         </div>
 
         <ul className="why__list">

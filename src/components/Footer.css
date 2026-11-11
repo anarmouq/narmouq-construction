@@ -4,7 +4,7 @@
 
 .footer {
   position: relative;
-  background: var(--ink-900);
+  background: #000000;
   color: var(--text-on-dark-muted);
   padding-top: 84px;
   overflow: hidden;

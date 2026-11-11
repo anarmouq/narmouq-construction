@@ -1,14 +1,33 @@
 /* ==========================================================================
-   HEADER — white bar with the logo lockup on the left and the navigation
-   on the right, exactly like the reference site. The bar is solid white
-   from the top so the gold mark always reads.
+   HEADER — floating dark pill bar. It is fixed to the top of the window,
+   sits over the hero, and stays in view while the page scrolls.
+   Logo on the left, navigation in the middle, phone + quote + call on the right.
    ========================================================================== */
 
 import { useEffect, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import { company, nav } from '../data/site'
 import { onScroll } from '../hooks/useScrollReveal'
 import { Phone } from './Icons'
+import { isInternal } from './SmartLink'
 import './Header.css'
+
+/* A menu link: site pages get the "active" highlight when you're on them;
+   anything else (like the 3D model .html file) is a plain link. */
+function NavItem({ item, ...rest }) {
+  if (!isInternal(item.href)) {
+    return (
+      <a href={item.href} {...rest}>
+        {item.label}
+      </a>
+    )
+  }
+  return (
+    <NavLink to={item.href} end={item.href === '/'} {...rest}>
+      {item.label}
+    </NavLink>
+  )
+}
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -36,9 +55,9 @@ export default function Header() {
     <>
       <header className={`header ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
         <div className="header__inner container">
-          <a
+          <Link
             className="header__brand"
-            href="#home"
+            to="/"
             onClick={close}
             aria-label={`${company.fullName} — home`}
           >
@@ -47,20 +66,25 @@ export default function Header() {
               <strong>{company.name}</strong>
               <small>Construction</small>
             </span>
-          </a>
+          </Link>
 
           <nav className="header__nav" aria-label="Main navigation">
             {nav.map((item) => (
-              <a key={item.href} href={item.href} onClick={close}>
-                {item.label}
-              </a>
+              <NavItem key={item.href} item={item} onClick={close} />
             ))}
           </nav>
 
           <div className="header__actions">
             <a className="header__phone" href={company.phoneHref}>
-              <Phone />
+              <small>{company.hoursShort}</small>
               <span>{company.phone}</span>
+            </a>
+            <Link className="header__btn header__btn--outline" to="/contact" onClick={close}>
+              Get a quote
+            </Link>
+            <a className="header__btn header__btn--solid" href={company.phoneHref}>
+              <Phone />
+              Call
             </a>
           </div>
 
@@ -82,15 +106,13 @@ export default function Header() {
       <div className={`drawer ${open ? 'is-open' : ''}`}>
         <nav aria-label="Mobile navigation">
           {nav.map((item, i) => (
-            <a key={item.href} href={item.href} onClick={close} style={{ '--i': i }}>
-              {item.label}
-            </a>
+            <NavItem key={item.href} item={item} onClick={close} style={{ '--i': i }} />
           ))}
         </nav>
         <div className="drawer__foot">
-          <a className="btn btn--primary" href="#contact" onClick={close}>
+          <Link className="btn btn--primary" to="/contact" onClick={close}>
             Get a quote
-          </a>
+          </Link>
           <a className="drawer__phone" href={company.phoneHref}>
             <Phone /> {company.phone}
           </a>

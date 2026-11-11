@@ -8,6 +8,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { hero } from '../data/site'
 import { ArrowLeft, ArrowRight } from '../components/Icons'
+import SmartLink from '../components/SmartLink'
 import './Hero.css'
 
 export default function Hero() {
@@ -61,9 +62,9 @@ export default function Hero() {
             <span>{slide.line2}</span>
           </h1>
           <p>{slide.text}</p>
-          <a className="btn btn--primary" href={hero.primaryCta.href}>
+          <SmartLink className="btn btn--primary" href={hero.primaryCta.href}>
             {hero.primaryCta.label} <ArrowRight />
-          </a>
+          </SmartLink>
         </div>
       </div>
 

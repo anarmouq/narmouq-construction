@@ -10,6 +10,7 @@ import { useCallback, useRef, useState } from 'react'
 import { company, services } from '../data/site'
 import Accent from '../components/Accent'
 import { ArrowLeft, ArrowRight } from '../components/Icons'
+import SmartLink from '../components/SmartLink'
 import './Services.css'
 
 /* How far each ring of cards sits from the middle, how much it shrinks and
@@ -144,9 +145,9 @@ export default function Services() {
                   <div className="svc-card__extra">
                     <div>
                       <p>{item.text}</p>
-                      <a className="svc-card__link" href="#contact" tabIndex={focused ? 0 : -1}>
+                      <SmartLink className="svc-card__link" href="/contact" tabIndex={focused ? 0 : -1}>
                         Enquire <ArrowRight />
-                      </a>
+                      </SmartLink>
                     </div>
                   </div>
                 </div>

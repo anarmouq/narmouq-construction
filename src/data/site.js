@@ -18,6 +18,7 @@ export const company = {
   email: 'info@narmouq.com',
   address: 'Amman, Jordan',
   hours: 'Sunday – Thursday, 8:00 – 17:00',
+  hoursShort: 'Sun–Thu, 8am–5pm',  // small label above the phone in the header
   social: [
     { label: 'Facebook', href: '#' },
     { label: 'Instagram', href: '#' },
@@ -25,23 +26,64 @@ export const company = {
   ],
 }
 
-/* Main navigation — the order here is the order shown in the header. */
+/* Main navigation — the order here is the order shown in the header.
+   Each link opens its own page. The pages themselves are in src/pages/. */
 export const nav = [
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Process', href: '#process' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Team', href: '#team' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Services', href: '/services' },
+  { label: 'Process', href: '/process' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Team', href: '/team' },
+  { label: 'Contact', href: '/contact' },
   { label: '3D Model', href: '/Kitchen_Model.html' },
 ]
+
+/* Banner at the top of each inner page: title, one-line intro and an
+   optional background photo (any image in the public/ folder). */
+export const pages = {
+  about: {
+    title: 'About Us',
+    intro: 'Who we are, how we work, and why clients trust us with their projects.',
+    image: '/pic1.jpg',
+  },
+  services: {
+    title: 'Our Services',
+    intro: 'From new builds to renovations — everything we can deliver for you.',
+    image: '/pic2.jpg',
+  },
+  process: {
+    title: 'Our Process',
+    intro: 'A clear, step-by-step path from first conversation to handover.',
+    image: '/pic3.jpg',
+  },
+  projects: {
+    title: 'Our Projects',
+    intro: 'A selection of the homes, offices and spaces we have built.',
+    image: '/pic1.jpg',
+  },
+  team: {
+    title: 'Our Team',
+    intro: 'The people who plan, manage and build every project.',
+    image: '/pic2.jpg',
+  },
+  contact: {
+    title: 'Contact Us',
+    intro: 'Tell us about your project and we will get back to you with a quote.',
+    image: '/pic3.jpg',
+  },
+  notFound: {
+    title: 'Page not found',
+    intro: 'The page you are looking for does not exist or has moved.',
+  },
+}
 
 /* ---- 01. HERO ----------------------------------------------------------
    A full-bleed slider. Add or remove a `slides` entry and the arrows, dots
    and autoplay all adjust themselves — nothing else needs changing.
    Each headline is written on two lines so it stacks like the reference.  */
 export const hero = {
-  primaryCta: { label: 'Request a quote', href: '#contact' },
+  primaryCta: { label: 'Request a quote', href: '/contact' },
   autoplayMs: 6500,
   slides: [
     {
@@ -202,44 +244,27 @@ export const workProcess = {
 export const projects = {
   eyebrow: 'Selected work',
   title: 'Selected **Projects**',
-  text: 'A sample of recent handovers across residential, commercial and infrastructure work.',
-  cta: { label: 'Start your project', href: '#contact' },
+  text: 'Explore our work up close, down to every footing, beam and board.',
+  cta: { label: 'Start your project', href: '/contact' },
+
+  /* A project with a `model` gets the big interactive 3D stage at the top.
+     The model file lives in public/projects/. */
   items: [
     {
-      title: 'Hillside Modern Residence',
+      title: 'Elevated deck & paver patio',
       category: 'Residential',
-      meta: 'Amman · 620 m²',
-      image:
-        'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1400&q=80',
-      featured: true,
-    },
-    {
-      title: 'Urban Business Center',
-      category: 'Commercial',
-      meta: 'Amman · 8 floors',
-      image:
-        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80',
-    },
-    {
-      title: 'Industrial Warehouse',
-      category: 'Industrial',
-      meta: 'Zarqa · 3,400 m²',
-      image:
-        'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1400&q=80',
-    },
-    {
-      title: 'Site Development',
-      category: 'Infrastructure',
-      meta: 'Madaba · Phase 1',
-      image:
-        'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1400&q=80',
-    },
-    {
-      title: 'Retail Fit-out',
-      category: 'Commercial',
-      meta: 'Amman · 900 m²',
-      image:
-        'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80',
+      model: '/projects/elevated-deck-patio.html',
+      summary:
+        'A stained wood deck raised 10 ft 9 in above a walk-out basement, with a 16-riser stair down to a new paver patio, retaining walls and a walkway that climbs to the driveway.',
+      detail:
+        'Turn it, zoom in, and press Build to watch it go up in the same 16 phases we built it in, from the footings to the string lights. Tap any part to see what it is and how it was installed.',
+      facts: [
+        { label: 'Deck area', value: '362 sq ft' },
+        { label: 'Deck height', value: '10 ft 9 in' },
+        { label: 'Build phases', value: '16' },
+        { label: 'Footings', value: '9, below frost depth' },
+        { label: 'Stair', value: '16 risers with a landing' },
+      ],
     },
   ],
 }
@@ -250,7 +275,7 @@ export const whyUs = {
   title: 'Why **Narmouq**',
   watermark: 'WHY',
   text: 'We keep the promises that most contractors only make: a fixed programme, an open budget and a site you would be comfortable walking a client through at any hour.',
-  cta: { label: 'Talk to our team', href: '#contact' },
+  cta: { label: 'Talk to our team', href: '/contact' },
   image:
     'https://images.unsplash.com/photo-1590644365607-1c5a0b4a2c4c?auto=format&fit=crop&w=1600&q=80',
   reasons: [

@@ -1,27 +1,44 @@
 /* ==========================================================================
-   HEADER + MOBILE DRAWER  (white bar)
+   HEADER + MOBILE DRAWER  (floating dark pill bar)
+   The bar is fixed, so it floats over the hero and stays on screen while
+   the page scrolls. Change --bar-gap to move it further from the top edge.
    ========================================================================== */
 
 .header {
-  position: fixed;
-  inset: 0 0 auto 0;
-  z-index: 100;
-  height: var(--header-h);
-  display: flex;
-  align-items: center;
-  background: var(--white);
-  transition: box-shadow var(--speed) var(--ease), height var(--speed) var(--ease);
-}
+  --bar-gap: 14px;          /* space between the window edge and the bar */
+  --bar-h: 72px;            /* height of the pill itself                 */
 
-.header.is-scrolled {
-  box-shadow: 0 6px 26px rgba(20, 24, 30, 0.08);
+  position: fixed;
+  top: var(--bar-gap);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 var(--gutter);
+  pointer-events: none;     /* only the bar itself is clickable          */
 }
 
 .header__inner {
+  pointer-events: auto;
   display: flex;
   align-items: center;
   gap: 28px;
   width: 100%;
+  max-width: calc(var(--container) + 40px);
+  height: var(--bar-h);
+  margin: 0 auto;
+  padding: 0 12px 0 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #000000;
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 10px 34px rgba(8, 10, 14, 0.28);
+  transition: background var(--speed) var(--ease), box-shadow var(--speed) var(--ease);
+}
+
+.header.is-scrolled .header__inner {
+  background: #000000;
+  box-shadow: 0 14px 40px rgba(8, 10, 14, 0.38);
 }
 
 /* ---- Brand -------------------------------------------------------------- */
@@ -29,13 +46,14 @@
 .header__brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   margin-right: auto;
+  flex: none;
 }
 
 .header__brand img {
-  width: 52px;
-  height: 52px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
   flex: none;
 }
@@ -48,19 +66,19 @@
 
 .header__brand strong {
   font-family: var(--font-display);
-  font-size: 1.7rem;
+  font-size: 1.45rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-dark);
+  color: var(--white);
 }
 
 .header__brand small {
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   font-weight: 400;
   letter-spacing: 0.44em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-bright);
   margin-top: 5px;
 }
 
@@ -69,54 +87,113 @@
 .header__nav {
   display: flex;
   align-items: center;
-  gap: 34px;
+  gap: 26px;
 }
 
 .header__nav a {
   position: relative;
-  font-size: 0.78rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-dark);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-on-dark);
   padding: 8px 0;
+  white-space: nowrap;
   transition: color 0.3s var(--ease);
 }
 
 .header__nav a::after {
   content: "";
   position: absolute;
-  inset: auto 0 0 0;
+  inset: auto 0 2px 0;
   height: 1px;
-  background: var(--gold);
+  background: var(--gold-bright);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.35s var(--ease);
 }
 
-.header__nav a:hover { color: var(--gold); }
-.header__nav a:hover::after { transform: scaleX(1); }
+.header__nav a:hover,
+.header__nav a.active { color: var(--gold-bright); }
+.header__nav a:hover::after,
+.header__nav a.active::after { transform: scaleX(1); }
+
+.drawer nav a.active { color: var(--gold); }
 
 /* ---- Actions ------------------------------------------------------------ */
 
 .header__actions {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 12px;
+  flex: none;
 }
 
 .header__phone {
   display: flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 0.86rem;
-  font-weight: 400;
-  color: var(--text-dark);
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 8px;
+  line-height: 1.15;
+  color: var(--white);
   transition: color 0.3s var(--ease);
 }
 
-.header__phone svg { width: 18px; height: 18px; color: var(--gold); }
-.header__phone:hover { color: var(--gold); }
+.header__phone small {
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-muted);
+}
+
+.header__phone span {
+  font-size: 1.02rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.header__phone:hover { color: var(--gold-bright); }
+
+.header__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease),
+    border-color 0.3s var(--ease), transform 0.25s var(--ease);
+}
+
+.header__btn:hover { transform: translateY(-1px); }
+.header__btn svg { width: 16px; height: 16px; }
+
+.header__btn--outline {
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  color: var(--white);
+}
+
+.header__btn--outline:hover {
+  border-color: var(--white);
+  background: var(--white);
+  color: var(--ink-900);
+}
+
+.header__btn--solid {
+  border: 1.5px solid var(--gold-bright);
+  background: var(--gold-bright);
+  color: var(--ink-900);
+}
+
+.header__btn--solid:hover {
+  background: var(--gold-soft);
+  border-color: var(--gold-soft);
+}
 
 /* ---- Burger ------------------------------------------------------------- */
 
@@ -125,20 +202,21 @@
   flex-direction: column;
   justify-content: center;
   gap: 6px;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   padding: 0;
-  border: 1px solid var(--line-light);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
   background: transparent;
   cursor: pointer;
 }
 
 .header__burger span {
   display: block;
-  width: 22px;
+  width: 20px;
   height: 1.5px;
   margin: 0 auto;
-  background: var(--text-dark);
+  background: var(--white);
   transition: transform 0.35s var(--ease), opacity 0.2s var(--ease);
 }
 
@@ -150,12 +228,12 @@
 
 .drawer {
   position: fixed;
-  top: var(--header-h);
+  top: 0;
   right: 0;
   z-index: 99;
   width: min(360px, 88vw);
-  height: calc(100dvh - var(--header-h));
-  padding: 32px 28px 40px;
+  height: 100dvh;
+  padding: calc(var(--header-h) + 24px) 28px 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -230,17 +308,33 @@
 
 /* ---- Breakpoints -------------------------------------------------------- */
 
-@media (max-width: 1160px) {
-  .header__nav { gap: 22px; }
-  .header__phone span { display: none; }
+/* Narrower desktops: tighten the nav and drop the phone number block
+   (the Call button is still there). */
+@media (max-width: 1280px) {
+  .header__inner { gap: 20px; }
+  .header__nav { gap: 18px; }
+  .header__nav a { font-size: 0.86rem; }
+  .header__phone { display: none; }
 }
 
+@media (max-width: 1080px) {
+  .header__btn--outline { display: none; }
+}
+
+/* Tablet & phone: burger menu, keep only the Call button visible. */
 @media (max-width: 980px) {
-  .header__nav,
-  .header__actions { display: none; }
+  .header { --bar-gap: 10px; --bar-h: 60px; }
+  .header__inner { padding: 0 8px 0 18px; gap: 10px; }
+  .header__nav { display: none; }
+  .header__btn { height: 42px; padding: 0 16px; }
   .header__burger { display: flex; }
-  .header__brand img { width: 42px; height: 42px; }
-  .header__brand strong { font-size: 1.35rem; }
+  .header__brand img { width: 36px; height: 36px; }
+  .header__brand strong { font-size: 1.2rem; }
+}
+
+@media (max-width: 420px) {
+  .header__brand small { display: none; }
+  .header__btn--solid { padding: 0 14px; }
 }
 
 @media (min-width: 981px) {

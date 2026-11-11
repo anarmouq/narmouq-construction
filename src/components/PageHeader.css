@@ -1,0 +1,75 @@
+/* ==========================================================================
+   PAGE HEADER — dark banner at the top of inner pages
+   ========================================================================== */
+
+.page-head {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* top padding clears the floating black bar */
+  padding: calc(var(--header-h) + 70px) 0 80px;
+  background: var(--ink-900);
+  color: var(--white);
+}
+
+/* Optional photo behind the banner, darkened so the text always reads. */
+.page-head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to right, rgba(12, 15, 19, 0.92) 0%, rgba(12, 15, 19, 0.6) 100%),
+    var(--page-img, none) center / cover no-repeat;
+}
+
+.page-head__inner {
+  max-width: var(--container);
+}
+
+.page-head__trail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-muted);
+}
+
+.page-head__trail a {
+  color: var(--gold-bright);
+  transition: color 0.3s var(--ease);
+}
+
+.page-head__trail a:hover { color: var(--white); }
+
+.page-head h1 {
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--white);
+  animation: page-head-in 0.8s var(--ease) both;
+}
+
+.page-head p {
+  max-width: 600px;
+  margin-top: 18px;
+  font-size: 1.02rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.78);
+  animation: page-head-in 0.8s var(--ease) both;
+  animation-delay: 0.12s;
+}
+
+@keyframes page-head-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 900px) {
+  .page-head { padding: calc(var(--header-h) + 44px) 0 56px; }
+}

@@ -5,6 +5,7 @@
 
 import { company, nav, services } from '../data/site'
 import { Mail, Phone, Pin } from './Icons'
+import SmartLink from './SmartLink'
 import './Footer.css'
 
 /* A simple line-art skyline used as a watermark behind the footer content. */
@@ -28,9 +29,9 @@ export default function Footer() {
 
       <div className="container footer__grid">
         <div className="footer__brand">
-          <a className="footer__logo" href="#home" aria-label={`${company.fullName} — home`}>
+          <SmartLink className="footer__logo" href="/" aria-label={`${company.fullName} — home`}>
             <img src={company.logoFullLight} alt={company.fullName} loading="lazy" />
-          </a>
+          </SmartLink>
           <p className="footer__blurb">
             Licensed general contractor delivering residential, commercial and industrial
             projects with clear pricing and dependable programmes.
@@ -49,7 +50,7 @@ export default function Footer() {
           <ul>
             {nav.map((item) => (
               <li key={item.href}>
-                <a href={item.href}>{item.label}</a>
+                <SmartLink href={item.href}>{item.label}</SmartLink>
               </li>
             ))}
           </ul>
@@ -60,7 +61,7 @@ export default function Footer() {
           <ul>
             {services.items.slice(0, 5).map((item) => (
               <li key={item.title}>
-                <a href="#services">{item.title}</a>
+                <SmartLink href="/services">{item.title}</SmartLink>
               </li>
             ))}
           </ul>

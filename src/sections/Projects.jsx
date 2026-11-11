@@ -4,22 +4,25 @@
    Add an item with `featured: true` to make it span the large tile.
    ========================================================================== */
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { projects } from '../data/site'
 import Accent from '../components/Accent'
 import { ArrowRight } from '../components/Icons'
+import SmartLink from '../components/SmartLink'
+import ModelShowcase from '../components/ModelShowcase'
 import './Projects.css'
 
 export default function Projects() {
   const [filter, setFilter] = useState('All')
 
-  const categories = useMemo(
-    () => ['All', ...new Set(projects.items.map((p) => p.category))],
-    [],
-  )
+  /* Projects with a 3D model get the large interactive stage; the rest go in the grid. */
+  const modelProjects = projects.items.filter((p) => p.model)
+  const photoProjects = projects.items.filter((p) => !p.model)
+
+  const categories = ['All', ...new Set(photoProjects.map((p) => p.category))]
 
   const visible =
-    filter === 'All' ? projects.items : projects.items.filter((p) => p.category === filter)
+    filter === 'All' ? photoProjects : photoProjects.filter((p) => p.category === filter)
 
   return (
     <section className="projects section section--tint" id="projects">
@@ -32,6 +35,12 @@ export default function Projects() {
           <p>{projects.text}</p>
         </div>
 
+        {modelProjects.map((project) => (
+          <ModelShowcase key={project.title} project={project} />
+        ))}
+
+        {/* Filter buttons: only shown once there are photo projects in more than one category. */}
+        {categories.length > 2 && (
         <div className="projects__filters" data-reveal role="tablist" aria-label="Filter projects">
           {categories.map((cat) => (
             <button
@@ -46,7 +55,10 @@ export default function Projects() {
             </button>
           ))}
         </div>
+        )}
 
+        {/* Photo projects grid: only shown when there are photo projects. */}
+        {visible.length > 0 && (
         <div className="projects__grid">
           {visible.map((project, i) => (
             <article
@@ -68,11 +80,12 @@ export default function Projects() {
             </article>
           ))}
         </div>
+        )}
 
         <div className="projects__cta" data-reveal>
-          <a className="btn btn--dark" href={projects.cta.href}>
+          <SmartLink className="btn btn--dark" href={projects.cta.href}>
             {projects.cta.label} <ArrowRight />
-          </a>
+          </SmartLink>
         </div>
       </div>
     </section>

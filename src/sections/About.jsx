@@ -6,6 +6,7 @@
 import { about } from '../data/site'
 import Accent from '../components/Accent'
 import { ArrowRight, Check } from '../components/Icons'
+import SmartLink from '../components/SmartLink'
 import './About.css'
 
 export default function About() {
@@ -69,9 +70,9 @@ export default function About() {
               ))}
             </ul>
 
-            <a className="text-link about__link" href="#services">
+            <SmartLink className="text-link about__link" href="/services">
               Explore our services <ArrowRight />
-            </a>
+            </SmartLink>
           </div>
         </div>
       </div>
