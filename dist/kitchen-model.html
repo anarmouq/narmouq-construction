@@ -4,9 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Main kitchen – drawings and 3D model</title>
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@400;500;600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --paper:#F7F9FA; --rail:#EAEFF2; --ink:#1E2A36; --muted:#5F6E7B; --rule:#C7D1D9;
@@ -130,21 +132,144 @@ canvas#gl{width:100%;height:100%;display:block;touch-action:none}
   .hint{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* ==========================================================================
+   NARMOUQ SIDEBAR — redesigned panel (drawing styles above are unchanged)
+   ========================================================================== */
+:root{ --nq-black:#000000; --nq-cream:#EDE6D6; --nq-gold:#C9A456; --nq-gold-bright:#F0A81C;
+  --nq-font:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif; }
+
+.shell{grid-template-columns:340px 1fr}
+aside{padding:0;gap:0;background:var(--paper);font-family:var(--nq-font)}
+aside > *{padding-left:22px;padding-right:22px}
+
+/* brand strip */
+.nq-bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding-top:12px;padding-bottom:12px;background:var(--nq-black)}
+.nq-back{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 16px 0 10px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.28);color:#fff;text-decoration:none;font:500 14px var(--nq-font);
+  transition:background .2s,border-color .2s,color .2s}
+.nq-back svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nq-back:hover{background:var(--nq-gold-bright);border-color:var(--nq-gold-bright);color:#000}
+.nq-mark img{display:block;width:40px;height:33px;object-fit:contain}
+.nq-back:focus-visible,.nq-mark:focus-visible{outline:2px solid var(--nq-gold-bright);outline-offset:3px}
+
+/* title */
+.nq-head{padding-top:24px;padding-bottom:18px}
+.nq-head h1{font:500 28px/1.15 var(--nq-font);letter-spacing:0}
+.nq-head .sub{margin:8px 0 0;font-size:14px;line-height:1.55;color:var(--muted)}
+
+/* sheet navigation (filled by the script) */
+.nq-nav{padding-bottom:6px}
+.sheets{gap:0}
+.sheets .nq-model{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:14px;width:100%;
+  padding:14px 16px;margin-bottom:22px;border-radius:12px;background:var(--nq-gold-bright);color:#000;
+  transition:transform .2s,box-shadow .2s}
+.sheets .nq-model:hover{background:var(--nq-gold-bright);transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.18)}
+.sheets .nq-model[aria-current="true"]:hover{background:#000}
+.sheets .nq-model:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.sheets .nq-model .ic{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#000}
+.sheets .nq-model .ic svg{width:20px;height:20px;fill:none;stroke:var(--nq-gold-bright);stroke-width:1.6;stroke-linejoin:round}
+.sheets .nq-model b{display:block;font:600 15.5px/1.2 var(--nq-font)}
+.sheets .nq-model small{display:block;margin-top:3px;font:400 13px/1.3 var(--nq-font);color:rgba(0,0,0,.72)}
+.sheets .nq-model[aria-current="true"]{background:#000;color:#fff}
+.sheets .nq-model[aria-current="true"] .ic{background:var(--nq-gold-bright)}
+.sheets .nq-model[aria-current="true"] .ic svg{stroke:#000}
+.sheets .nq-model[aria-current="true"] small{color:rgba(255,255,255,.7)}
+
+.nq-grp{margin-bottom:18px}
+.nq-grp h2{margin:0 0 6px;font:500 13px var(--nq-font);color:var(--muted)}
+.sheets .nq-grp button{grid-template-columns:52px 1fr;padding:9px 12px;border-radius:8px;font:400 15px/1.3 var(--nq-font)}
+.sheets .nq-grp button .no{font:500 12.5px var(--narrow)}
+.sheets .nq-grp button[aria-current="true"]{background:var(--nq-black);color:#fff}
+.sheets .nq-grp button[aria-current="true"] .no{color:var(--nq-gold-bright)}
+
+/* layer toggles as on/off chips */
+.nq-show{padding-top:4px;padding-bottom:22px}
+.nq-show h2{margin:0 0 10px;font:500 13px var(--nq-font);color:var(--muted)}
+.layers{flex-direction:row;flex-wrap:wrap;gap:8px}
+.layer{position:relative;gap:8px;padding:7px 14px 7px 11px;border:1px solid var(--rule);border-radius:999px;
+  font:400 14px var(--nq-font);color:var(--muted);background:var(--paper);user-select:none;transition:background .15s,color .15s,border-color .15s}
+.layer input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.layer .sw{width:9px;height:9px;border-radius:50%;opacity:.35}
+.layer:has(input:checked){background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.layer:has(input:checked) .sw{opacity:1}
+.layer:has(input:focus-visible){outline:2px solid var(--sel);outline-offset:2px}
+
+/* reference sections */
+.nq-more{padding-bottom:28px;border-top:1px solid var(--rule)}
+.nq-acc{border-bottom:1px solid var(--rule)}
+.nq-acc summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:15px 0;
+  font:500 15px var(--nq-font);color:var(--ink)}
+.nq-acc summary::-webkit-details-marker{display:none}
+.nq-acc summary::after{content:"";margin-left:auto;width:8px;height:8px;border-right:1.6px solid var(--muted);
+  border-bottom:1.6px solid var(--muted);transform:rotate(45deg) translateY(-3px);transition:transform .2s}
+.nq-acc[open] summary::after{transform:rotate(-135deg) translateY(-1px)}
+.nq-acc summary:focus-visible{outline:2px solid var(--sel);outline-offset:2px}
+.nq-count{min-width:22px;padding:1px 7px;border-radius:999px;background:var(--rail);color:var(--muted);
+  font:500 12px var(--nq-font);text-align:center}
+.nq-count:empty{display:none}
+.nq-acc > :not(summary){margin-bottom:16px}
+.nq-acc .tb{border:0;font-family:var(--nq-font)}
+.nq-acc .tb div{grid-template-columns:84px 1fr;border-top:1px solid var(--rule)}
+.nq-acc .tb div:first-child{border-top:0}
+.nq-acc .tb span{padding:6px 0}
+.nq-acc .tb span:first-child{border-right:0;font:400 13px var(--nq-font)}
+.nq-acc .fin{gap:10px;font-size:13.5px}
+.nq-acc .notes{font-size:14px;line-height:1.55}
+.nq-acc .notes li{margin-bottom:9px}
+
+@media (max-width:820px){
+  .shell{grid-template-columns:1fr}
+  aside{max-height:48vh;padding:0;gap:0}
+  aside > *{padding-left:14px;padding-right:14px}
+  .nq-bar{padding-top:8px;padding-bottom:8px}
+  .nq-back{height:34px}
+  .nq-head{padding-top:12px;padding-bottom:10px}
+  .nq-head h1{font-size:22px}
+  .nq-head .sub{display:none}
+  /* one scrolling row: 3D model first, then every sheet */
+  .sheets{flex-direction:row;align-items:center;gap:6px;overflow-x:auto;padding-bottom:6px}
+  .nq-grp{display:contents}
+  .nq-grp h2{display:none}
+  .sheets .nq-model{width:auto;flex:none;margin:0;padding:7px 14px 7px 7px;gap:8px;border-radius:999px}
+  .sheets .nq-model .ic{width:28px;height:28px}
+  .sheets .nq-model .ic svg{width:15px;height:15px}
+  .sheets .nq-model small{display:none}
+  .sheets .nq-model b{font-size:14px;white-space:nowrap}
+  .sheets .nq-grp button{flex:none;padding:7px 12px;border:1px solid var(--rule);border-radius:999px;font-size:14px}
+  .nq-show{padding-top:8px;padding-bottom:12px}
+  .nq-show h2{display:none}
+  .layer{padding:5px 11px 5px 9px;font-size:13px}
+}
 </style>
 </head>
 <body>
 <div class="shell">
   <aside>
-    <div>
+    <!-- Brand strip: back to the website + Narmouq mark -->
+    <div class="nq-bar">
+      <a class="nq-back" href="/" id="nqBack">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        Back
+      </a>
+      <a class="nq-mark" href="/" aria-label="Narmouq Construction home">
+        <img src="/logo-narmouq-mark.png" alt="" width="40" height="33">
+      </a>
+    </div>
+
+    <div class="nq-head">
       <h1>Main kitchen</h1>
-      <div class="sub">Drawings and 3D model, all dimensions in millimetres</div>
+      <p class="sub">Construction drawings and a 3D model you can walk through. All sizes are in millimetres.</p>
     </div>
-    <div class="group">
-      <h2>Sheets</h2>
-      <nav class="sheets" id="sheets"></nav>
-    </div>
-    <div class="group">
-      <h2>Layers</h2>
+
+    <!-- Sheets: the script fills #sheets; the 3D model gets its own button -->
+    <nav class="nq-nav" aria-label="Drawings">
+      <div class="sheets" id="sheets"></div>
+    </nav>
+
+    <div class="group nq-show">
+      <h2>Show on the drawing</h2>
       <div class="layers">
         <label class="layer"><input type="checkbox" id="lyDim" checked><span class="sw" style="background:var(--dim)"></span><span>Dimensions</span></label>
         <label class="layer"><input type="checkbox" id="lyId" checked><span class="sw" style="background:var(--muted)"></span><span>Cabinet IDs</span></label>
@@ -152,21 +277,25 @@ canvas#gl{width:100%;height:100%;display:block;touch-action:none}
         <label class="layer"><input type="checkbox" id="lyLt" checked><span class="sw" style="background:#E0A21C"></span><span>Lighting</span></label>
       </div>
     </div>
-    <div class="group">
-      <h2>Finishes</h2>
-      <ul class="fin" id="fin"></ul>
-    </div>
-    <div class="group">
-      <h2>Title block</h2>
-      <div class="tb" id="tb"></div>
-    </div>
-    <div class="group">
-      <h2>Notes</h2>
-      <ul class="notes" id="notes"></ul>
-    </div>
-    <div class="group" id="elGroup">
-      <h2>Electrical on this sheet</h2>
-      <table class="elist" id="elist"></table>
+
+    <!-- Reference information, folded away until needed -->
+    <div class="nq-more">
+      <details class="nq-acc" open>
+        <summary>About this sheet</summary>
+        <div class="tb" id="tb"></div>
+      </details>
+      <details class="nq-acc">
+        <summary>Materials and finishes <span class="nq-count" id="finCount"></span></summary>
+        <ul class="fin" id="fin"></ul>
+      </details>
+      <details class="nq-acc">
+        <summary>Notes <span class="nq-count" id="notesCount"></span></summary>
+        <ul class="notes" id="notes"></ul>
+      </details>
+      <details class="nq-acc" id="elGroup">
+        <summary>Electrical boxes <span class="nq-count" id="elCount"></span></summary>
+        <table class="elist" id="elist"></table>
+      </details>
     </div>
   </aside>
   <main>
@@ -2130,15 +2259,36 @@ let current=null, svgState=null;
 
 function renderFin(){$('#fin').innerHTML=Object.values(FIN).map(f=>`<li><span class="chip" style="background:${f.css||'linear-gradient(135deg,#fff 0,#ddd 100%)'}"></span><span><b>${f.v}</b>${f.n}</span></li>`).join('')}
 renderFin();
+$('#finCount').textContent=Object.keys(FIN).length;
+/* Sheet list: the 3D model as its own button, then the drawings in groups. */
+const NAV_GROUPS=[
+  {t:'Plans',v:['plan','rcp']},
+  {t:'Wall elevations',v:['elev-a','elev-b','elev-c','elev-d']},
+  {t:'Lighting details',v:['cove','wire']}
+];
 function renderNav(){
-  $('#sheets').innerHTML=SHEETS.map(s=>`<button data-v="${s.v}" aria-current="${s.v===current}"><span class="no">${s.no}</span><span>${s.t}</span></button>`).join('');
+  const btn=s=>`<button data-v="${s.v}" aria-current="${s.v===current}"><span class="no">${s.no}</span><span>${s.t}</span></button>`;
+  const grouped=new Set(NAV_GROUPS.flatMap(g=>g.v).concat('model'));
+  const model=`<button class="nq-model" data-v="model" aria-current="${current==='model'}">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Zm0 0v10m0 0 9-5m-9 5-9-5m9 5v10"/></svg></span>
+      <span><b>Walk through the 3D model</b><small>Open doors and drawers, change the time of day</small></span></button>`;
+  const groups=NAV_GROUPS.map(g=>`<div class="nq-grp"><h2>${g.t}</h2>${SHEETS.filter(s=>g.v.includes(s.v)).map(btn).join('')}</div>`).join('');
+  const rest=SHEETS.filter(s=>!grouped.has(s.v));   /* any future sheet still shows up */
+  $('#sheets').innerHTML=model+groups+(rest.length?`<div class="nq-grp"><h2>More drawings</h2>${rest.map(btn).join('')}</div>`:'');
   document.querySelectorAll('#sheets button').forEach(b=>b.onclick=()=>{location.hash=b.dataset.v});
+}
+/* Back: return to the website page the visitor came from, or the home page. */
+{
+  let back='/';
+  try{ const r=new URL(document.referrer); if(r.origin===location.origin && !r.pathname.startsWith('/kitchen-model')) back=r.pathname+r.search; }catch(e){}
+  $('#nqBack').href=back;
 }
 function renderInfo(s){
   $('#tb').innerHTML=`<div><span>Project</span><span class="big">Main kitchen</span></div><div><span>Sheet</span><span class="big">${s.no}</span></div><div><span>Title</span><span>${s.t}</span></div><div><span>Units</span><span>mm, not to scale</span></div><div><span>Source</span><span>MAIN_KITCHEN_ELECTRIC.pdf</span></div><div><span>Status</span><span>Design development, verify on site</span></div>`;
   $('#notes').innerHTML=s.notes.map(n=>typeof n==='string'?`<li>${n}</li>`:`<li class="w">${n.t}</li>`).join('');
   const list=s.w?ELEC.filter(e=>e.w===s.w||(s.w==='D'&&e.w==='I')):ELEC;
   $('#elGroup').style.display=list.length?'':'none';
+  $('#notesCount').textContent=s.notes.length; $('#elCount').textContent=list.length;
   $('#elist').innerHTML=`<tr><th>Box</th><th>${s.w?'X':'Wall'}</th><th>${s.w?'Height':'X'}</th>${s.w?'':'<th>Height</th>'}</tr>`+
     list.map(e=>s.w?`<tr><td>${e.id}</td><td>${e.x}</td><td>${e.z}</td></tr>`:`<tr><td>${e.id}</td><td>${e.w==='I'?'Island':e.w}</td><td>${e.x??e.px}</td><td>${e.w==='I'?'–':e.z}</td></tr>`).join('');
 }

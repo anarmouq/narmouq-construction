@@ -36,7 +36,7 @@ export const nav = [
   { label: 'Projects', href: '/projects' },
   { label: 'Team', href: '/team' },
   { label: 'Contact', href: '/contact' },
-  { label: '3D Model', href: '/Kitchen_Model.html' },
+  { label: '3D Model', href: '/kitchen-model' },
 ]
 
 /* Banner at the top of each inner page: title, one-line intro and an

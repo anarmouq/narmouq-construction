@@ -7,8 +7,17 @@
 
 import { Link } from 'react-router-dom'
 
+/* Standalone pages that live in public/ as their own .html file but are
+   linked without ".html" (e.g. public/kitchen-model.html → /kitchen-model).
+   They need a full page load, not a switch inside the React site. */
+export const STANDALONE_PAGES = ['/kitchen-model']
+
 export function isInternal(href = '') {
-  return href.startsWith('/') && !href.endsWith('.html')
+  return (
+    href.startsWith('/') &&
+    !href.endsWith('.html') &&
+    !STANDALONE_PAGES.includes(href)
+  )
 }
 
 export default function SmartLink({ href, children, ...rest }) {
