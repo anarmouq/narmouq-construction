@@ -4,7 +4,7 @@
    Logo on the left, navigation in the middle, phone + quote + call on the right.
    ========================================================================== */
 
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { company, nav } from '../data/site'
 import { onScroll } from '../hooks/useScrollReveal'
@@ -41,27 +41,60 @@ export default function Header() {
     return () => document.body.classList.remove('no-scroll')
   }, [open])
 
-  /* Close the mobile menu when the viewport grows to desktop size. */
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 981px)')
-    const handler = (e) => e.matches && setOpen(false)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
+  /* Keep everything inside the bar. The bar measures itself and, while its
+     contents don't fit, drops one thing at a time (see Header.css, "Fit"):
+       fit 0  everything shown
+       fit 1  hide the hours + phone block (the Call button stays)
+       fit 2  also hide "Get a quote", tighten the links
+       fit 3  links move into the menu button
+     This works at any screen size, zoom level or font. */
+  const headerRef = useRef(null)
+  const innerRef = useRef(null)
+  const [compact, setCompact] = useState(false)
+
+  useLayoutEffect(() => {
+    const header = headerRef.current
+    const inner = innerRef.current
+    if (!header || !inner) return
+
+    const fit = () => {
+      let level = 0
+      for (;;) {
+        header.dataset.fit = level
+        if (level === 3 || inner.scrollWidth <= inner.clientWidth + 1) break
+        level++
+      }
+      setCompact(level === 3)
+    }
+
+    fit()
+    const ro = new ResizeObserver(fit)
+    ro.observe(document.documentElement)
+    document.fonts?.ready.then(fit)
+    return () => ro.disconnect()
   }, [])
+
+  /* Close the menu once the full links fit in the bar again. */
+  useEffect(() => {
+    if (!compact) setOpen(false)
+  }, [compact])
 
   const close = () => setOpen(false)
 
   return (
     <>
-      <header className={`header ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
-        <div className="header__inner container">
+      <header
+        ref={headerRef}
+        className={`header ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}
+      >
+        <div className="header__inner container" ref={innerRef}>
           <Link
             className="header__brand"
             to="/"
             onClick={close}
             aria-label={`${company.fullName} — home`}
           >
-            <img src={company.logoMark} alt="" width="52" height="52" />
+            <img src={company.logoMark} alt="" width="48" height="40" />
             <span>
               <strong>{company.name}</strong>
               <small>Construction</small>

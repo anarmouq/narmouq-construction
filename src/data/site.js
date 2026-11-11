@@ -9,8 +9,8 @@ export const company = {
   fullName: 'Narmouq Construction',
   tagline: 'Building with purpose',
   logoFull: '/logo.png',            // full lockup on its grey backdrop
-  logoFullLight: '/logo-light.png', // full lockup, white wordmark — for dark backgrounds (footer)
-  logoMark: '/logo1.png',           // gold mark on a transparent background — works anywhere
+  logoFullLight: '/logo-narmouq.png', // full logo (N mark + NARMOUQ CONSTRUCTION), cream & gold — for dark backgrounds (footer)
+  logoMark: '/logo-narmouq-mark.png', // just the N mark, cream & gold, transparent — header and service cards
   logoMarkDark: '/logo13.png',      // gold mark on the dark navy tile
   phone: '+962 7 0000 0000',
   phoneHref: 'tel:+96270000000',
@@ -60,7 +60,7 @@ export const pages = {
   projects: {
     title: 'Our Projects',
     intro: 'A selection of the homes, offices and spaces we have built.',
-    image: '/pic1.jpg',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=75',
   },
   team: {
     title: 'Our Team',

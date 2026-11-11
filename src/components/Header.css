@@ -23,7 +23,7 @@
   align-items: center;
   gap: 28px;
   width: 100%;
-  max-width: calc(var(--container) + 40px);
+  max-width: 1440px;
   height: var(--bar-h);
   margin: 0 auto;
   padding: 0 12px 0 26px;
@@ -52,8 +52,8 @@
 }
 
 .header__brand img {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 40px;
   object-fit: contain;
   flex: none;
 }
@@ -64,22 +64,23 @@
   line-height: 1;
 }
 
+/* Name set to echo the logo: wide-spaced cream NARMOUQ over gold CONSTRUCTION. */
 .header__brand strong {
-  font-family: var(--font-display);
-  font-size: 1.45rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-family: var(--font-body);
+  font-size: 1.12rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--white);
+  color: #ede6d6;
 }
 
 .header__brand small {
-  font-size: 0.5rem;
-  font-weight: 400;
-  letter-spacing: 0.44em;
+  font-size: 0.52rem;
+  font-weight: 500;
+  letter-spacing: 0.47em;
   text-transform: uppercase;
-  color: var(--gold-bright);
-  margin-top: 5px;
+  color: #c9a456;
+  margin-top: 6px;
 }
 
 /* ---- Desktop nav -------------------------------------------------------- */
@@ -306,38 +307,49 @@
 
 .drawer__scrim.is-open { opacity: 1; visibility: visible; }
 
-/* ---- Breakpoints -------------------------------------------------------- */
+/* ---- Fit -----------------------------------------------------------------
+   Header.jsx measures the bar and sets data-fit on <header> to the first
+   step at which everything fits inside it:
+     0  everything shown
+     1  hide the hours + phone block (the Call button stays)
+     2  also hide "Get a quote", tighten the links
+     3  links move into the menu button                                    */
 
-/* Narrower desktops: tighten the nav and drop the phone number block
-   (the Call button is still there). */
-@media (max-width: 1280px) {
-  .header__inner { gap: 20px; }
-  .header__nav { gap: 18px; }
-  .header__nav a { font-size: 0.86rem; }
-  .header__phone { display: none; }
-}
+/* Nothing squashes or wraps; the bar steps down instead. */
+.header__nav,
+.header__actions,
+.header__brand { flex-shrink: 0; }
 
-@media (max-width: 1080px) {
-  .header__btn--outline { display: none; }
-}
+.header[data-fit="1"] .header__phone,
+.header[data-fit="2"] .header__phone,
+.header[data-fit="3"] .header__phone { display: none; }
 
-/* Tablet & phone: burger menu, keep only the Call button visible. */
+.header[data-fit="2"] .header__inner,
+.header[data-fit="3"] .header__inner { gap: 20px; }
+.header[data-fit="2"] .header__nav { gap: 18px; }
+.header[data-fit="2"] .header__nav a { font-size: 0.86rem; }
+.header[data-fit="2"] .header__btn--outline,
+.header[data-fit="3"] .header__btn--outline { display: none; }
+
+.header[data-fit="3"] .header__nav { display: none; }
+.header[data-fit="3"] .header__burger { display: flex; }
+
+/* The slide-out menu only exists while the links are in the menu button. */
+.header:not([data-fit="3"]) ~ .drawer,
+.header:not([data-fit="3"]) ~ .drawer__scrim { display: none; }
+
+/* ---- Phone & tablet sizing ---------------------------------------------- */
+
 @media (max-width: 980px) {
   .header { --bar-gap: 10px; --bar-h: 60px; }
-  .header__inner { padding: 0 8px 0 18px; gap: 10px; }
-  .header__nav { display: none; }
+  .header .header__inner,
+  .header[data-fit] .header__inner { padding: 0 8px 0 18px; gap: 10px; }
   .header__btn { height: 42px; padding: 0 16px; }
-  .header__burger { display: flex; }
-  .header__brand img { width: 36px; height: 36px; }
-  .header__brand strong { font-size: 1.2rem; }
+  .header__brand img { width: 40px; height: 33px; }
+  .header__brand strong { font-size: 0.95rem; letter-spacing: 0.24em; }
 }
 
 @media (max-width: 420px) {
   .header__brand small { display: none; }
   .header__btn--solid { padding: 0 14px; }
-}
-
-@media (min-width: 981px) {
-  .drawer,
-  .drawer__scrim { display: none; }
 }
