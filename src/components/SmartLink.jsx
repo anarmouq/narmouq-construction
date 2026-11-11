@@ -8,9 +8,10 @@
 import { Link } from 'react-router-dom'
 
 /* Standalone pages that live in public/ as their own .html file but are
-   linked without ".html" (e.g. public/kitchen-model.html → /kitchen-model).
+   linked without ".html". (None at the moment: the kitchen page now opens
+   inside the website at /kitchen-model.)
    They need a full page load, not a switch inside the React site. */
-export const STANDALONE_PAGES = ['/kitchen-model']
+export const STANDALONE_PAGES = []
 
 export function isInternal(href = '') {
   return (

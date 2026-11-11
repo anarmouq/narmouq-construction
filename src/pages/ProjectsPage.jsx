@@ -1,17 +1,12 @@
-/* ProjectsPage — banner + the section(s) listed below. Add or remove a line to change the page. */
-import PageHeader from '../components/PageHeader'
-import Projects from '../sections/Projects'
-import Testimonials from '../sections/Testimonials'
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import HtmlPage from '../components/HtmlPage'
+import html from './html/projects.html?raw'
 
 export default function ProjectsPage() {
-  useScrollReveal()
-
   return (
-    <>
-      <PageHeader page="projects" />
-      <Projects />
-      <Testimonials />
-    </>
+    <HtmlPage
+      html={html}
+      title="Our projects | Narmouq Construction"
+      description="A selection of the homes, offices and spaces Narmouq Construction has built."
+    />
   )
 }

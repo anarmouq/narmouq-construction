@@ -1,15 +1,12 @@
-/* ProcessPage — banner + the section(s) listed below. Add or remove a line to change the page. */
-import PageHeader from '../components/PageHeader'
-import Process from '../sections/Process'
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import HtmlPage from '../components/HtmlPage'
+import html from './html/process.html?raw'
 
 export default function ProcessPage() {
-  useScrollReveal()
-
   return (
-    <>
-      <PageHeader page="process" />
-      <Process />
-    </>
+    <HtmlPage
+      html={html}
+      title="Our process | Narmouq Construction"
+      description="A clear, step-by-step path from first conversation to handover."
+    />
   )
 }

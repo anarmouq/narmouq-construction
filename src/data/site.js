@@ -12,13 +12,13 @@ export const company = {
   logoFullLight: '/logo-narmouq.png', // full logo (N mark + NARMOUQ CONSTRUCTION), cream & gold — for dark backgrounds (footer)
   logoMark: '/logo-narmouq-mark.png', // just the N mark, cream & gold, transparent — header and service cards
   logoMarkDark: '/logo13.png',      // gold mark on the dark navy tile
-  phone: '+962 7 0000 0000',
-  phoneHref: 'tel:+96270000000',
-  whatsapp: 'https://wa.me/96270000000',
+  phone: '(410) 555-0123',
+  phoneHref: 'tel:+14105550123',
+  whatsapp: 'https://wa.me/14105550123',
   email: 'info@narmouq.com',
-  address: 'Amman, Jordan',
-  hours: 'Sunday – Thursday, 8:00 – 17:00',
-  hoursShort: 'Sun–Thu, 8am–5pm',  // small label above the phone in the header
+  address: 'Baltimore, Maryland',
+  hours: 'Monday – Friday, 8:00 am – 5:00 pm',
+  hoursShort: 'Mon–Fri, 8am–5pm',  // small label above the phone in the header
   social: [
     { label: 'Facebook', href: '#' },
     { label: 'Instagram', href: '#' },
@@ -36,7 +36,36 @@ export const nav = [
   { label: 'Projects', href: '/projects' },
   { label: 'Team', href: '/team' },
   { label: 'Contact', href: '/contact' },
-  { label: '3D Model', href: '/kitchen-model' },
+  /* A link with "children" becomes a drop-down list in the top bar. */
+  {
+    label: '3D Model',
+    children: [
+      { label: 'Elevated deck and patio', href: '/deck-model' },
+      { label: 'Kitchen and dining', href: '/kitchen-model' },
+      { label: 'Design studio', href: '/design-studio' },
+    ],
+  },
+]
+
+/* Your 3D models. Each one opens on its own page (path) with the top bar
+   and footer around it. The model file itself lives in public/projects/.
+   To add a model: put its .html file in public/projects/, add it here,
+   and add it to the "3D Model" children in `nav` above. */
+export const models = [
+  {
+    path: '/deck-model',
+    label: 'Deck',
+    title: 'Elevated deck and paver patio',
+    file: '/projects/elevated-deck-patio.html',
+    description: 'Turn, zoom and build the elevated deck and paver patio in the same 16 phases Narmouq Construction built it in.',
+  },
+  {
+    path: '/kitchen-model',
+    label: 'Kitchen',
+    title: 'Kitchen and dining fit-out',
+    file: '/projects/kitchen.html',
+    description: 'Construction drawings and a walk-through 3D model of a kitchen and dining fit-out by Narmouq Construction.',
+  },
 ]
 
 /* Banner at the top of each inner page: title, one-line intro and an

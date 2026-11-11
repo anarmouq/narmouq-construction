@@ -1,29 +1,38 @@
-/* ==========================================================================
-   HOME PAGE — the landing page at "/".
-   It gives a taste of each part of the business; the full details live on
-   their own pages (About, Services, …). Move, add or delete a line to
-   change what the home page shows.
-   ========================================================================== */
+import HtmlPage from '../components/HtmlPage'
+import html from './html/home.html?raw'
 
-import Hero from '../sections/Hero'
-import About from '../sections/About'
-import WhyUs from '../sections/WhyUs'
-import Services from '../sections/Services'
-import Projects from '../sections/Projects'
-import Testimonials from '../sections/Testimonials'
-import { useScrollReveal } from '../hooks/useScrollReveal'
+/* The hero's 3D tower uses three.js r128, loaded only when the home page opens. */
+const THREE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'
+const loadScript = (src) =>
+  new Promise((resolve, reject) => {
+    const found = document.querySelector(`script[src="${src}"]`)
+    if (found) return found.dataset.loaded ? resolve() : found.addEventListener('load', resolve)
+    const s = document.createElement('script')
+    s.src = src
+    s.onload = () => { s.dataset.loaded = '1'; resolve() }
+    s.onerror = reject
+    document.head.appendChild(s)
+  })
+
+function startHero(root) {
+  const canvas = root.querySelector('#hero-canvas')
+  if (!canvas) return
+  let stop
+  let cancelled = false
+  loadScript(THREE_URL)
+    .then(() => loadScript('/assets/js/hero3d.js'))
+    .then(() => { if (!cancelled) stop = window.narmouqHero(canvas) })
+    .catch(() => canvas.remove())
+  return () => { cancelled = true; stop?.() }
+}
 
 export default function HomePage() {
-  useScrollReveal()
-
   return (
-    <>
-      <Hero />
-      <About />
-      <WhyUs />
-      <Services />
-      <Projects />
-      <Testimonials />
-    </>
+    <HtmlPage
+      html={html}
+      title="Narmouq Construction | General contractor in Amman"
+      description="Licensed general contractor delivering residential, commercial and industrial projects in Jordan with clear pricing and dependable programmes."
+      onReady={startHero}
+    />
   )
 }

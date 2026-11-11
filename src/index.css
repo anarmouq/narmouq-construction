@@ -1,7 +1,0 @@
-/* Global stylesheet entry point.
-   Colours, fonts and spacing → src/styles/theme.css
-   Resets and shared elements  → src/styles/base.css
-   Each section has its own CSS file next to its component. */
-
-@import './styles/theme.css';
-@import './styles/base.css';

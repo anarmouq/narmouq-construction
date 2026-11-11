@@ -1,15 +1,12 @@
-/* TeamPage — banner + the section(s) listed below. Add or remove a line to change the page. */
-import PageHeader from '../components/PageHeader'
-import Team from '../sections/Team'
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import HtmlPage from '../components/HtmlPage'
+import html from './html/team.html?raw'
 
 export default function TeamPage() {
-  useScrollReveal()
-
   return (
-    <>
-      <PageHeader page="team" />
-      <Team />
-    </>
+    <HtmlPage
+      html={html}
+      title="Our team | Narmouq Construction"
+      description="The people who plan, manage and build every Narmouq project."
+    />
   )
 }

@@ -1,15 +1,12 @@
-/* ServicesPage — banner + the section(s) listed below. Add or remove a line to change the page. */
-import PageHeader from '../components/PageHeader'
-import Services from '../sections/Services'
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import HtmlPage from '../components/HtmlPage'
+import html from './html/services.html?raw'
 
 export default function ServicesPage() {
-  useScrollReveal()
-
   return (
-    <>
-      <PageHeader page="services" />
-      <Services />
-    </>
+    <HtmlPage
+      html={html}
+      title="Our services | Narmouq Construction"
+      description="General contracting, commercial builds, residential projects, renovation and sitework across Jordan."
+    />
   )
 }

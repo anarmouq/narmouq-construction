@@ -1,162 +1,158 @@
 /* ==========================================================================
-   HEADER — floating dark pill bar. It is fixed to the top of the window,
-   sits over the hero, and stays in view while the page scrolls.
-   Logo on the left, navigation in the middle, phone + quote + call on the right.
+   TOP BAR — liquid-glass pill fixed to the top of the window, plus the
+   mobile menu. Styles: src/styles/style.css ("top bar", "mobile menu").
+   Links come from `nav` in src/data/site.js.
    ========================================================================== */
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { company, nav } from '../data/site'
-import { onScroll } from '../hooks/useScrollReveal'
-import { Phone } from './Icons'
 import { isInternal } from './SmartLink'
-import './Header.css'
 
-/* A menu link: site pages get the "active" highlight when you're on them;
-   anything else (like the 3D model .html file) is a plain link. */
-function NavItem({ item, ...rest }) {
+/* Site pages get aria-current="page" (the highlight) when you're on them;
+   standalone pages like the 3D model are plain links. */
+function NavItem({ item, className }) {
   if (!isInternal(item.href)) {
-    return (
-      <a href={item.href} {...rest}>
-        {item.label}
-      </a>
-    )
+    return <a className={className} href={item.href}>{item.label}</a>
   }
   return (
-    <NavLink to={item.href} end={item.href === '/'} {...rest}>
+    <NavLink className={className} to={item.href} end={item.href === '/'}>
       {item.label}
     </NavLink>
+  )
+}
+
+/* "3D Model" drop-down: opens on hover, on keyboard focus, or with a tap. */
+function NavDropdown({ item }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+  const { pathname } = useLocation()
+  const active = item.children.some((c) => c.href === pathname)
+
+  useEffect(() => setOpen(false), [pathname])
+  useEffect(() => {
+    if (!open) return
+    const away = (e) => !ref.current?.contains(e.target) && setOpen(false)
+    const key = (e) => e.key === 'Escape' && setOpen(false)
+    document.addEventListener('pointerdown', away)
+    document.addEventListener('keydown', key)
+    return () => {
+      document.removeEventListener('pointerdown', away)
+      document.removeEventListener('keydown', key)
+    }
+  }, [open])
+
+  return (
+    <li className={`nav__drop${open ? ' is-open' : ''}`} ref={ref}>
+      <button
+        type="button"
+        className={`nav__toggle${active ? ' is-active' : ''}`}
+        aria-expanded={open}
+        aria-haspopup="true"
+        onClick={() => setOpen((v) => !v)}
+      >
+        {item.label}
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      </button>
+      <ul className="nav__menu">
+        {item.children.map((c) => (
+          <li key={c.href}><NavItem item={c} /></li>
+        ))}
+      </ul>
+    </li>
+  )
+}
+
+export function Brand() {
+  return (
+    <Link className="brand" to="/" aria-label={`${company.fullName}, home`}>
+      <img className="brand__mark" src={company.logoMark} alt="" width="40" height="40" />
+      <span className="brand__text">
+        <span className="brand__name">NARMOUQ</span>
+        <span className="brand__sub">CONSTRUCTION</span>
+      </span>
+    </Link>
   )
 }
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
 
-  useEffect(() => onScroll((y) => setScrolled(y > 20)), [])
-
-  /* Lock page scrolling while the mobile menu is open. */
   useEffect(() => {
-    document.body.classList.toggle('no-scroll', open)
-    return () => document.body.classList.remove('no-scroll')
-  }, [open])
-
-  /* Keep everything inside the bar. The bar measures itself and, while its
-     contents don't fit, drops one thing at a time (see Header.css, "Fit"):
-       fit 0  everything shown
-       fit 1  hide the hours + phone block (the Call button stays)
-       fit 2  also hide "Get a quote", tighten the links
-       fit 3  links move into the menu button
-     This works at any screen size, zoom level or font. */
-  const headerRef = useRef(null)
-  const innerRef = useRef(null)
-  const [compact, setCompact] = useState(false)
-
-  useLayoutEffect(() => {
-    const header = headerRef.current
-    const inner = innerRef.current
-    if (!header || !inner) return
-
-    const fit = () => {
-      let level = 0
-      for (;;) {
-        header.dataset.fit = level
-        if (level === 3 || inner.scrollWidth <= inner.clientWidth + 1) break
-        level++
-      }
-      setCompact(level === 3)
-    }
-
-    fit()
-    const ro = new ResizeObserver(fit)
-    ro.observe(document.documentElement)
-    document.fonts?.ready.then(fit)
-    return () => ro.disconnect()
+    const onScroll = () => setScrolled(window.scrollY > 30)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  /* Close the menu once the full links fit in the bar again. */
+  /* The menu closes on any page change and with the Escape key. */
+  useEffect(() => setOpen(false), [pathname])
   useEffect(() => {
-    if (!compact) setOpen(false)
-  }, [compact])
-
-  const close = () => setOpen(false)
+    document.body.classList.toggle('menu-open', open)
+    const onKey = (e) => e.key === 'Escape' && setOpen(false)
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [open])
 
   return (
     <>
-      <header
-        ref={headerRef}
-        className={`header ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}
-      >
-        <div className="header__inner container" ref={innerRef}>
-          <Link
-            className="header__brand"
-            to="/"
-            onClick={close}
-            aria-label={`${company.fullName} — home`}
-          >
-            <img src={company.logoMark} alt="" width="48" height="40" />
-            <span>
-              <strong>{company.name}</strong>
-              <small>Construction</small>
-            </span>
-          </Link>
-
-          <nav className="header__nav" aria-label="Main navigation">
-            {nav.map((item) => (
-              <NavItem key={item.href} item={item} onClick={close} />
-            ))}
+      <header className={`topbar${scrolled ? ' is-scrolled' : ''}`}>
+        <div className="topbar__inner glass glass--refract">
+          <Brand />
+          <nav className="nav" aria-label="Main">
+            <ul>
+              {nav.map((item) =>
+                item.children ? (
+                  <NavDropdown key={item.label} item={item} />
+                ) : (
+                  <li key={item.href}><NavItem item={item} /></li>
+                ),
+              )}
+            </ul>
           </nav>
-
-          <div className="header__actions">
-            <a className="header__phone" href={company.phoneHref}>
-              <small>{company.hoursShort}</small>
-              <span>{company.phone}</span>
-            </a>
-            <Link className="header__btn header__btn--outline" to="/contact" onClick={close}>
-              Get a quote
-            </Link>
-            <a className="header__btn header__btn--solid" href={company.phoneHref}>
-              <Phone />
-              Call
+          <div className="topbar__actions">
+            <Link className="btn btn--ghost btn--sm" to="/contact" data-magnetic="0.2">Get a quote</Link>
+            <a className="btn btn--amber btn--sm" href={company.phoneHref} data-magnetic="0.2">
+              <svg><use href="#phone" /></svg>Call
             </a>
           </div>
-
           <button
-            className="header__burger"
+            className="menu-btn"
             type="button"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
+            aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
           >
-            <span />
-            <span />
-            <span />
+            <span></span><span></span><span></span>
           </button>
         </div>
       </header>
 
-      {/* Mobile drawer */}
-      <div className={`drawer ${open ? 'is-open' : ''}`}>
-        <nav aria-label="Mobile navigation">
-          {nav.map((item, i) => (
-            <NavItem key={item.href} item={item} onClick={close} style={{ '--i': i }} />
-          ))}
-        </nav>
-        <div className="drawer__foot">
-          <Link className="btn btn--primary" to="/contact" onClick={close}>
-            Get a quote
-          </Link>
-          <a className="drawer__phone" href={company.phoneHref}>
-            <Phone /> {company.phone}
-          </a>
-        </div>
+      <div className="mobile-menu glass" id="mobile-menu">
+        <ul>
+          {nav.map((item) =>
+            item.children ? (
+              <li key={item.label} className="mm-group">
+                <span className="mm-group__label">{item.label}</span>
+                <ul>
+                  {item.children.map((c) => (
+                    <li key={c.href}><NavItem item={c} className="mm-link mm-link--sub" /></li>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <li key={item.href}><NavItem item={item} className="mm-link" /></li>
+            ),
+          )}
+        </ul>
+        <Link className="btn btn--ghost" to="/contact">Get a quote</Link>
+        <a className="btn btn--amber" href={company.phoneHref}>
+          <svg><use href="#phone" /></svg>Call {company.phone}
+        </a>
       </div>
-      <button
-        className={`drawer__scrim ${open ? 'is-open' : ''}`}
-        onClick={close}
-        tabIndex={open ? 0 : -1}
-        aria-label="Close menu"
-      />
     </>
   )
 }

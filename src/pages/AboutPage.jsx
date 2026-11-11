@@ -1,17 +1,12 @@
-/* AboutPage — banner + the section(s) listed below. Add or remove a line to change the page. */
-import PageHeader from '../components/PageHeader'
-import About from '../sections/About'
-import WhyUs from '../sections/WhyUs'
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import HtmlPage from '../components/HtmlPage'
+import html from './html/about.html?raw'
 
 export default function AboutPage() {
-  useScrollReveal()
-
   return (
-    <>
-      <PageHeader page="about" />
-      <About />
-      <WhyUs />
-    </>
+    <HtmlPage
+      html={html}
+      title="About us | Narmouq Construction"
+      description="Who we are, how we work, and why clients in Jordan trust Narmouq Construction with their projects."
+    />
   )
 }

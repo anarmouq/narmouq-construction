@@ -1,15 +1,12 @@
-/* ContactPage — banner + the section(s) listed below. Add or remove a line to change the page. */
-import PageHeader from '../components/PageHeader'
-import Contact from '../sections/Contact'
-import { useScrollReveal } from '../hooks/useScrollReveal'
+import HtmlPage from '../components/HtmlPage'
+import html from './html/contact.html?raw'
 
 export default function ContactPage() {
-  useScrollReveal()
-
   return (
-    <>
-      <PageHeader page="contact" />
-      <Contact />
-    </>
+    <HtmlPage
+      html={html}
+      title="Contact us | Narmouq Construction"
+      description="Tell us about your project and get a scope, a programme and a clear price within one working day."
+    />
   )
 }
