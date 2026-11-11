@@ -45,17 +45,17 @@ export const pages = {
   about: {
     title: 'About Us',
     intro: 'Who we are, how we work, and why clients trust us with their projects.',
-    image: '/pic1.jpg',
+    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=75',
   },
   services: {
     title: 'Our Services',
     intro: 'From new builds to renovations — everything we can deliver for you.',
-    image: '/pic2.jpg',
+    image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=1920&q=75',
   },
   process: {
     title: 'Our Process',
     intro: 'A clear, step-by-step path from first conversation to handover.',
-    image: '/pic3.jpg',
+    image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1920&q=75',
   },
   projects: {
     title: 'Our Projects',
@@ -65,12 +65,12 @@ export const pages = {
   team: {
     title: 'Our Team',
     intro: 'The people who plan, manage and build every project.',
-    image: '/pic2.jpg',
+    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1920&q=75',
   },
   contact: {
     title: 'Contact Us',
     intro: 'Tell us about your project and we will get back to you with a quote.',
-    image: '/pic3.jpg',
+    image: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&w=1920&q=75',
   },
   notFound: {
     title: 'Page not found',
